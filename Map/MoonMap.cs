@@ -1,4 +1,4 @@
-/*public class MoonMap : IMap
+public class MoonMap : IMap
 {
     
-}*/
+}

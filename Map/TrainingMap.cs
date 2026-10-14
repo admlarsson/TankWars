@@ -1,4 +1,4 @@
-/*public class TrainingMap : IMap
+public class TrainingMap : IMap
 {
     
-}*/
+}
