@@ -1,4 +1,4 @@
-public class BotTankFactory : ITankFactory
+public class BotTankFactory
 {
 
 }

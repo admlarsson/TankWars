@@ -1,10 +1,12 @@
-public class Cannon : IWeapon
+using System;
+
+namespace TankWars.Tanks
+{
+    public class Cannon : IWeapon
     {
-        public void Fire()
+        public void Fire(int startX, int startY, double power, int angle)
         {
-            // Detta är logiken som körs när just en kanon skjuter.
-            // Senare kommer vi kanske lägga till logik för att 
-            // skicka iväg en "Projectile" på spelplanen.
-            Console.WriteLine("Kanonen skjuter iväg en tung granat!");
+            Console.WriteLine("Kanonen skjuter!");
         }
     }
+}

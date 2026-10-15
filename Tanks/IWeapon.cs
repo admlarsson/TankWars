@@ -1,4 +1,7 @@
-public interface IWeapon
+namespace TankWars.Tanks
 {
-    void Fire(); 
+    public interface IWeapon
+    {
+        void Fire(int startX, int startY, double power, int angle); 
+    }
 }

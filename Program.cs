@@ -1,5 +1,7 @@
 ﻿
 using System;
+using System.Text;
+using TankWars.Game;
 
 namespace TankWars
 {
@@ -7,8 +9,16 @@ namespace TankWars
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Välkommen till Tank Wars!");
-            // Här kommer vi senare skapa vår spel-loop och vår Game-instans
+            // Tvingar terminalen att förstå specialtecken som █
+            Console.OutputEncoding = Encoding.UTF8;
+            
+            GameManager gameManager = new GameManager();
+            gameManager.StartGame();
+            
+            // Stoppar programmet från att stängas ner direkt så vi hinner se kartan
+            Console.ReadLine();
+
+            Console.Clear();
             
         }
     }
