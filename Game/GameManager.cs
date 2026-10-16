@@ -2,6 +2,7 @@ using System;
 using TankWars.Map;
 using TankWars.Factories;
 using TankWars.Tanks;
+using TankWars.Core;
 
 namespace TankWars.Game
 {
@@ -57,33 +58,76 @@ namespace TankWars.Game
                 // Om spelaren valde 1, 2 eller 3 så är factory inte null längre
                 if (factory != null)
                 {
-                    Console.Clear(); // Rensa bort menyn så vi får en ren skärm
-                    
-                    // Skapa och rita precis som du tänkte!
-                    
-
-                    IMap map = factory.CreateMap(130, 40);
-
+                    // 1. Skapa Karta och Vapen (precis som tidigare)
+                    IMap map = factory.CreateMap(130, 20); // Höjden satt till 20!
                     IWeapon basicCannon = new Cannon();
 
-                    // 3. Skapa Spelare och Bot
-                    // Spelaren börjar på X=10. Gränserna är 1 till 128 (innanför väggarna)
-                    ITank player1 = new PlayerTank(startX: 10, minX: 1, maxX: 128, map, basicCannon);
-                    
-                    // Boten börjar på X=115 (på höger sida).
-                    ITank bot1 = new BotTank(startX: 115, minX: 1, maxX: 128, map, basicCannon);
+                    // 2. Skapa tanks
+                    ITank player1 = new PlayerTank(10, 1, 21, map, basicCannon);
+                    ITank bot1 = new BotTank(118, 108, 128, map, basicCannon);
 
-                    // 4. Lägg in dem i kartans Generic EntityManager
+                    // 3. Stoppa in dem i kartans lista
                     map.Tanks.Add(player1);
                     map.Tanks.Add(bot1);
 
-                    map.Draw();
+                    // --- HÄR BÖRJAR SPELLOOPEN ---
+                   // --- HÄR BÖRJAR SPELLOOPEN ---
+                    
+                    // 1. Starta Iteratorn (TurnManager) och lägg till spelarna
+                    TurnManager turnManager = new TurnManager();
+                    turnManager.AddTank(player1);
+                    turnManager.AddTank(bot1);
 
-                    Console.SetCursorPosition(0, map.Height + 2);
+                    bool gameRunning = true;
+                    
+                    // Spelet snurrar så länge spelet är igång OCH fler än 1 lever
+                    while (gameRunning && turnManager.GetAliveCount() > 1)
+                    {
+                        // 2. ITERATOR PATTERN: Hämta nästa tank i kön!
+                        ITank currentTank = turnManager.GetNextTank();
+                        
+                        bool isTurnActive = true;
 
-                    // PAUSA! Annars loopar programmet direkt och ritar menyn igen
-                    Console.WriteLine("\n[Tryck på Enter för att gå tillbaka till menyn]");
-                    Console.ReadLine(); 
+                        // 3. Den inre loopen för just DENNA spelares tur
+                        while (isTurnActive && gameRunning)
+                        {
+                            Console.Clear();
+                            map.Draw();
+
+                            Console.SetCursorPosition(0, map.Height + 2);
+                            Console.WriteLine($"[ AKTIV SPELARE: Tank på X:{currentTank.X} | HP: {currentTank.HP} ]");
+                            Console.WriteLine($"Pilar = Kör | SPACE = Skjut | ESC = Avsluta");
+
+                            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                            switch (keyInfo.Key)
+                            {
+                                case ConsoleKey.LeftArrow:
+                                currentTank.MoveLeft(); // BaseTank stoppar automatiskt vid MinX
+                                break;
+
+                                case ConsoleKey.RightArrow:
+                                currentTank.MoveRight(); // BaseTank stoppar automatiskt vid MaxX
+                                break;
+
+                                case ConsoleKey.Spacebar:
+                                    // 4. BRIDGE PATTERN: Tanken använder sitt vapen!
+                                    // (Vi hårdkodar kraft 50 och vinkel 45 för tillfället)
+                                    currentTank.Attack(45, 35); 
+                                    
+                                    // Avsluta turen så while-loopen bryts och nästa tank hämtas
+                                    isTurnActive = false; 
+                                    
+                                    // Pausa i en sekund så spelaren ser att skottet gick iväg innan skärmen rensas
+                                    System.Threading.Thread.Sleep(1000); 
+                                    break;
+
+                                case ConsoleKey.Escape:
+                                    gameRunning = false;
+                                    break;
+                            }
+                        }
+                    }
                 }
             }
         }

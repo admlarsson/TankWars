@@ -46,7 +46,7 @@ namespace TankWars.Tanks
         // Här är Attack-metoden MED en kropp (måsvingar) som anropar vapnet
         public void Attack(double power, int angle)
         {
-            weapon.Fire(X, Y, power, angle);
+            weapon.Fire(X, Y, power, angle, map);
         }
 
         // Dessa MÅSTE vara 'public abstract' och sluta med semikolon

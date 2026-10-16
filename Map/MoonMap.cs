@@ -46,6 +46,10 @@ namespace TankWars.Map
             }
 
             Console.WriteLine("╚" + new string('═', width) + "╝");
+            foreach (var tank in Tanks.GetAll())
+            {
+                tank.Draw();
+            }
             Console.ResetColor();
         }
     }
