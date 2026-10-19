@@ -5,8 +5,18 @@ using TankWars.Map;
 
 namespace TankWars.Tanks
 {
-    // BRIDGE PATTERN: Abstraction
-    // Istället för Cannon, har vi en BaseBullet som ärver av IWeapon
+        // FALL #1:
+        // Bridge Pattern (Strukturellt mönster).
+
+        // Vi har frikopplat vapnets abstraktion (Ammunitionen: BaseBullet, NormalBullet, ExplosiveBullet) 
+        // från dess implementering (Flygbeteendet: IAirBehavior, GravityBehavior, DropBehavior). 
+        // BaseBullet "äger" en IAirBehavior-instans och delegerar logiken för rörelse (UpdateVelocity) över bron till beteendet.
+      
+        // Varför?
+        // För att undvika en explosion av klasser (t.ex. NormalGravityBullet, ExplosiveDropBullet). 
+        // Nu kan vi kombinera valfri ammunition med valfritt flygbeteende dynamiskt vid runtime, 
+        // vilket gör det enkelt att lägga till nya skott eller flygsätt oberoende av varandra.
+
     public abstract class BaseBullet : IWeapon
     {
         public int Damage { get; protected set; }
