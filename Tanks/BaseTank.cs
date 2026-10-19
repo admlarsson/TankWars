@@ -9,7 +9,7 @@ namespace TankWars.Tanks
         public int Y { get; protected set; }
         public int HP { get; protected set; }
 
-        public int Direction { get; protected set; }
+        public int Direction { get; protected set; } //Håller koll på tankens riktning
 
         protected int MinX { get; set; }
         protected int MaxX { get; set; }
@@ -22,7 +22,7 @@ namespace TankWars.Tanks
             HP = 100;
             MinX = minX; 
             MaxX = maxX; 
-            Direction = direction; // NYTT: Spara riktningen
+            Direction = direction; // Spara riktningen
             this.map = map; 
             this.weapon = weapon;
             SetPosition(startX); 
@@ -50,8 +50,12 @@ namespace TankWars.Tanks
         public void Attack(double power, int angle)
         {
             int actualAngle = angle;
+
+            //Kontroll är tank vänd åt vänster
             if (Direction == -1)
             {
+                // Spegelvänd vinkeln! (T.ex. om inmatningen är 35 grader, blir det 180 - 35 = 145 grader).
+                // Detta får skottet att flyga i en perfekt båge åt vänster istället.
                 actualAngle = 180 - angle; 
             }
 
