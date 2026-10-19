@@ -59,7 +59,7 @@ namespace TankWars.Game
                 if (factory != null)
                 {
 // 1. Skapa Karta
-                    IMap map = factory.CreateMap(130, 30);
+                    IMap map = factory.CreateMap(130, 20);
 
                     // --- NYTT: VAPENMENY ---
                     Console.Clear();
