@@ -63,8 +63,8 @@ namespace TankWars.Game
                     IWeapon basicCannon = new Cannon();
 
                     // 2. Skapa tanks
-                    ITank player1 = new PlayerTank(10, 1, 21, map, basicCannon);
-                    ITank bot1 = new BotTank(118, 108, 128, map, basicCannon);
+                    ITank player1 = new PlayerTank(10, 1, 21, 1, map, basicCannon);
+                    ITank bot1 = new BotTank(118, 108, 128, -1, map, basicCannon);
 
                     // 3. Stoppa in dem i kartans lista
                     map.Tanks.Add(player1);
@@ -113,7 +113,7 @@ namespace TankWars.Game
                                 case ConsoleKey.Spacebar:
                                     // 4. BRIDGE PATTERN: Tanken använder sitt vapen!
                                     // (Vi hårdkodar kraft 50 och vinkel 45 för tillfället)
-                                    currentTank.Attack(45, 35); 
+                                    currentTank.Attack(45, 30); 
                                     
                                     // Avsluta turen så while-loopen bryts och nästa tank hämtas
                                     isTurnActive = false; 

@@ -5,8 +5,8 @@ namespace TankWars.Tanks
 {
     public class BotTank : BaseTank
     {
-        public BotTank(int startX, int minX, int maxX, IMap map, IWeapon weapon) 
-            : base(startX, minX, maxX, map, weapon) { }
+        public BotTank(int startX, int minX, int maxX, int direction, IMap map, IWeapon weapon) 
+            : base(startX, minX, maxX, direction, map, weapon) { }
 
         public override void Draw()
         {

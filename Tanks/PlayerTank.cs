@@ -5,8 +5,8 @@ namespace TankWars.Tanks
 {
     public class PlayerTank : BaseTank
     {
-        public PlayerTank(int startX, int minX, int maxX, IMap map, IWeapon weapon) 
-            : base(startX, minX, maxX, map, weapon) { }
+        public PlayerTank(int startX, int minX, int maxX, int direction, IMap map, IWeapon weapon) 
+            : base(startX, minX, maxX, direction, map, weapon) { }
 
         public override void Draw()
         {

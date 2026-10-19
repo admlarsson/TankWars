@@ -9,17 +9,20 @@ namespace TankWars.Tanks
         public int Y { get; protected set; }
         public int HP { get; protected set; }
 
+        public int Direction { get; protected set; }
+
         protected int MinX { get; set; }
         protected int MaxX { get; set; }
 
         protected IMap map;
         protected IWeapon weapon;
 
-        public BaseTank(int startX, int minX, int maxX, IMap map, IWeapon weapon)
+        public BaseTank(int startX, int minX, int maxX, int direction, IMap map, IWeapon weapon)
         {
             HP = 100;
             MinX = minX; 
             MaxX = maxX; 
+            Direction = direction; // NYTT: Spara riktningen
             this.map = map; 
             this.weapon = weapon;
             SetPosition(startX); 
@@ -46,7 +49,13 @@ namespace TankWars.Tanks
         // Här är Attack-metoden MED en kropp (måsvingar) som anropar vapnet
         public void Attack(double power, int angle)
         {
-            weapon.Fire(X, Y, power, angle, map);
+            int actualAngle = angle;
+            if (Direction == -1)
+            {
+                actualAngle = 180 - angle; 
+            }
+
+            weapon.Fire(X, Y, power, actualAngle, map);
         }
 
         // Dessa MÅSTE vara 'public abstract' och sluta med semikolon
