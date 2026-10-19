@@ -6,7 +6,7 @@ namespace TankWars.Factories
     {
         public IMap CreateMap(int width, int maxHeight)
         {
-            ITerrainGenerator generator = new TrainingTerrain(groundLevel: 0);
+            ITerrainGenerator generator = new TrainingTerrain(groundLevel: 0);  //Här skapas terrängen med ground level 0
 
             int [] heights = generator.GenerateTerrain(width, maxHeight);
 
