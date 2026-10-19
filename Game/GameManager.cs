@@ -58,13 +58,37 @@ namespace TankWars.Game
                 // Om spelaren valde 1, 2 eller 3 så är factory inte null längre
                 if (factory != null)
                 {
-                    // 1. Skapa Karta och Vapen (precis som tidigare)
-                    IMap map = factory.CreateMap(130, 20); // Höjden satt till 20!
-                    IWeapon basicCannon = new Cannon();
+// 1. Skapa Karta
+                    IMap map = factory.CreateMap(130, 30);
 
-                    // 2. Skapa tanks
-                    ITank player1 = new PlayerTank(10, 1, 21, 1, map, basicCannon);
-                    ITank bot1 = new BotTank(118, 108, 128, -1, map, basicCannon);
+                    // --- NYTT: VAPENMENY ---
+                    Console.Clear();
+                    Console.WriteLine("--- BYGG DITT VAPEN ---");
+                    
+                    // Val 1: Ammunition
+                    Console.WriteLine("Steg 1: Välj Ammunitionstyp");
+                    Console.WriteLine("1. Normal (Liten träffyta, 50 Skada)");
+                    Console.WriteLine("2. Explosiv (Stor träffyta, 25 Skada)");
+                    Console.Write("Val (1-2): ");
+                    string bulletChoice = Console.ReadLine();
+
+                    // Val 2: Flygstil
+                    Console.WriteLine("\nSteg 2: Välj Flygstil");
+                    Console.WriteLine("1. Standard (Vanlig kastbana)");
+                    Console.WriteLine("2. Guidad (Tryck SPACE i luften för att störtdyka)");
+                    Console.Write("Val (1-2): ");
+                    string flightChoice = Console.ReadLine();
+
+                    // Låt fabriken bygga exakt den kombination spelaren valde
+                    BulletFactory bulletFactory = new BulletFactory();
+                    IWeapon playerWeapon = bulletFactory.CreateWeapon(bulletChoice, flightChoice);
+
+                    // Låt boten alltid få en standardkanon (så den inte råkar dyka ner sina egna skott)
+                    IWeapon botWeapon = new NormalBullet(new GravityBehavior());
+
+                    // 2. Skapa tanks och ge dem sina unika vapen
+                    ITank player1 = new PlayerTank(10, 1, 21, 1, map, playerWeapon);
+                    ITank bot1 = new BotTank(118, 108, 128, -1, map, botWeapon);
 
                     // 3. Stoppa in dem i kartans lista
                     map.Tanks.Add(player1);

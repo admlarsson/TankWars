@@ -6,7 +6,7 @@ public interface ITank
     int X { get; }
     int Y { get; }
     int HP { get; }
-    int Direction {get; }
+    int Direction {get; } //Anger vilket håll tanks tittar åt
     
 
     void MoveLeft();
