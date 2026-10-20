@@ -62,17 +62,17 @@ namespace TankWars.Tanks
                 int screenY = (int)Math.Round(y);
 
                 // 3. KANTKONTROLL
-                if (screenX < 0 || screenX >= map.TerrainHeights.Length)
+                if (screenX < 0 || screenX >= map.GetTerrainHeights().Length)
                 {
                     isFlying = false;
                     break;
                 }
 
                 // 4. MARKKONTROLL (Träff)
-                if (screenY <= map.TerrainHeights[screenX])
+                if (screenY <= map.GetTerrainHeights()[screenX])
                 {
                     // Anropar den abstrakta explosionen (som bestäms av subklasserna!)
-                    DrawExplosion(screenX, map.TerrainHeights[screenX] + 1, map);
+                    DrawExplosion(screenX, map.GetTerrainHeights()[screenX] + 1, map);
                     isFlying = false;
                     break;
                 }
@@ -85,9 +85,9 @@ namespace TankWars.Tanks
 
         private void DrawProjectile(int x, int y, IMap map)
         {
-            if (y < map.Height)
+            if (y < map.GetHeight())
             {
-                Console.SetCursorPosition(x + 1, map.Height - y);
+                Console.SetCursorPosition(x + 1, map.GetHeight() - y);
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("*");
                 Console.ResetColor();
@@ -96,9 +96,9 @@ namespace TankWars.Tanks
 
         private void EraseProjectile(int x, int y, IMap map)
         {
-            if (y < map.Height)
+            if (y < map.GetHeight())
             {
-                Console.SetCursorPosition(x + 1, map.Height - y);
+                Console.SetCursorPosition(x + 1, map.GetHeight() - y);
                 Console.Write(" "); // Bytt från "." till " " för ett renare utseende
             }
         }

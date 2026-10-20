@@ -111,8 +111,8 @@ namespace TankWars.Game
             ITank bot1 = new BotTank(118, 108, 128, -1, map, botWeapon);
 
             // 3. Stoppa in dem i kartans lista
-            map.Tanks.Add(player1);
-            map.Tanks.Add(bot1);
+            map.GetTanks().Add(player1);
+            map.GetTanks().Add(bot1);
 
             // --- HÄR BÖRJAR SPELLOOPEN ---
             // --- HÄR BÖRJAR SPELLOOPEN ---
@@ -138,8 +138,8 @@ namespace TankWars.Game
                     Console.Clear();
                     map.Draw();
 
-                    Console.SetCursorPosition(0, map.Height + 2);
-                    Console.WriteLine($"[ AKTIV SPELARE: Tank på X:{currentTank.X} | HP: {currentTank.HP} ]");
+                    Console.SetCursorPosition(0, map.GetHeight() + 2);
+                    Console.WriteLine($"[ AKTIV SPELARE: Tank på X:{currentTank.GetX()} | HP: {currentTank.GetHP()} ]");
                     Console.WriteLine($"Pilar = Kör | SPACE = Skjut | ESC = Avsluta");
 
                     ConsoleKeyInfo keyInfo = Console.ReadKey(true);
@@ -156,12 +156,12 @@ namespace TankWars.Game
 
                         case ConsoleKey.Spacebar:
                             // 4. BRIDGE PATTERN: Tanken använder sitt vapen!
-                            // (Vi hårdkodar kraft 50 och vinkel 45 för tillfället)
+
                             
                             // 1. Rensa en liten yta under menyn för inmatning
-                            Console.SetCursorPosition(0, map.Height + 4); 
+                            Console.SetCursorPosition(0, map.GetHeight() + 4); 
                             Console.Write(new string(' ', 50)); 
-                            Console.SetCursorPosition(0, map.Height + 4);
+                            Console.SetCursorPosition(0, map.GetHeight() + 4);
                             
                             // 2. Låt spelaren skriva in Vinkel
                             Console.Write("Ange vinkel (0-90): ");

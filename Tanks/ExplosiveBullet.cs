@@ -12,15 +12,15 @@ namespace TankWars.Tanks
 
         protected override void DrawExplosion(int x, int y, IMap map)
         {
-            if (y < map.Height)
+            if (y < map.GetHeight())
             {
                 // En större explosion för detta unika skott
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.SetCursorPosition(Math.Max(1, x), map.Height - y);
+                Console.SetCursorPosition(Math.Max(1, x), map.GetHeight() - y);
                 Console.Write("###"); 
                 Console.ResetColor();
                 System.Threading.Thread.Sleep(500); 
-                Console.SetCursorPosition(Math.Max(1, x), map.Height - y);
+                Console.SetCursorPosition(Math.Max(1, x), map.GetHeight() - y);
                 Console.Write("   "); 
             }
         }

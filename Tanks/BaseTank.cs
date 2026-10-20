@@ -5,45 +5,72 @@ namespace TankWars.Tanks
 {
     public abstract class BaseTank : ITank 
     {
-        public int X { get; protected set; }
-        public int Y { get; protected set; }
-        public int HP { get; protected set; }
+        private int _x;
+        private int _y;
+        private int _hp;
+        private readonly IMap _map;
+        private readonly IWeapon _weapon;
 
-        public int Direction { get; protected set; } //Håller koll på tankens riktning
+        private readonly int _minX;
+        private readonly int _maxX;
+        private readonly int _direction;
 
-        protected int MinX { get; set; }
-        protected int MaxX { get; set; }
+       
 
-        protected IMap map;
-        protected IWeapon weapon;
 
-        public BaseTank(int startX, int minX, int maxX, int direction, IMap map, IWeapon weapon)
+        protected BaseTank(
+            int startX, 
+            int minX, 
+            int maxX, 
+            int direction, 
+            IMap map, 
+            IWeapon weapon)
         {
-            HP = 100;
-            MinX = minX; 
-            MaxX = maxX; 
-            Direction = direction; // Spara riktningen
-            this.map = map; 
-            this.weapon = weapon;
+            _hp = 100;
+            _minX = minX; 
+            _maxX = maxX; 
+            _direction = direction; // Spara riktningen
+            _map = map; 
+            _weapon = weapon;
             SetPosition(startX); 
+        }
+
+        public int GetX()
+        {
+            return _x;
+        }
+
+        public int GetY()
+        {
+            return _y;
+        }
+
+        public int GetHP()
+        {
+            return _hp;
+        }
+
+        public IMap GetMap()
+        {
+            return _map;
         }
 
         public void SetPosition(int x)
         {
-            X = x;
-            Y = map.TerrainHeights[x] + 1; 
+            _x = x;
+            _y = _map.GetTerrainHeights()[x] + 1; 
         }
 
         public void MoveLeft()
         {
-            if (X > MinX) 
-                SetPosition(X - 1);
+            if (_x > _minX) 
+                SetPosition(_x - 1);
         }
 
         public void MoveRight()
         {
-            if (X < MaxX) 
-                SetPosition(X + 1);
+            if (_x < _maxX) 
+                SetPosition(_x + 1);
         }
 
         // Här är Attack-metoden MED en kropp (måsvingar) som anropar vapnet
@@ -52,19 +79,18 @@ namespace TankWars.Tanks
             int actualAngle = angle;
 
             //Kontroll är tank vänd åt vänster
-            if (Direction == -1)
+            if (_direction == -1)
             {
                 // Spegelvänd vinkeln! (T.ex. om inmatningen är 35 grader, blir det 180 - 35 = 145 grader).
                 // Detta får skottet att flyga i en perfekt båge åt vänster istället.
                 actualAngle = 180 - angle; 
             }
 
-            weapon.Fire(X, Y, power, actualAngle, map);
+            _weapon.Fire(_x, _y, power, actualAngle, _map);
         }
 
         // Dessa MÅSTE vara 'public abstract' och sluta med semikolon
         public abstract void Draw();
-        public abstract void TakeTurn();
     
     }
 }

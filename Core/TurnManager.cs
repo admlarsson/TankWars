@@ -3,13 +3,7 @@ using TankWars.Tanks; // För att hitta ITank
 
 namespace TankWars.Core
 {
-    // FALL #X: Iterator Pattern
-    // VAD: En egen itererbar klass (TurnManager) som hanterar turordningen i spelet.
-    // HUR: Den döljer logiken för att rotera genom en lista av spelare i en oändlig loop,
-    //      och hanterar borttagning av döda (HP <= 0) spelare dynamiskt.
-    // VARFÖR: Det går inte att lösa detta lika enkelt med en inbyggd List<T> eller foreach-loop, 
-    //         eftersom de inte stödjer evig iteration (cirkulära listor) eller säker borttagning 
-    //         under pågående loop. GameManager hålls ren och ber bara om "nästa tank".
+
     public class TurnManager
     {
         private readonly List<ITank> _tanks = new List<ITank>();
@@ -47,7 +41,7 @@ namespace TankWars.Core
                 ITank currentTank = _tanks[_currentIndex];
 
                 // 4. Lever den? Returnera den!
-                if (currentTank.HP > 0)
+                if (currentTank.GetHP() > 0)
                 {
                     return currentTank;
                 }

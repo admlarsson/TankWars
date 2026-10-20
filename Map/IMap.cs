@@ -7,12 +7,12 @@ namespace TankWars.Map
     public interface IMap
     {
         // Lägg till Height här så att alla vet att en IMap alltid har en höjd!
-        int Height { get; } 
+        int GetHeight();
         
-        int[] TerrainHeights { get; }
+        int[] GetTerrainHeights();
 
-        EntityManager<ITank> Tanks { get; }
-        EntityManager<IPowerUp> PowerUps { get; }
+        EntityManager<ITank> GetTanks();
+        EntityManager<IPowerUp> GetPowerUps(); 
 
         void Draw();
     }

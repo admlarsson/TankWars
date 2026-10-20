@@ -13,14 +13,14 @@ namespace TankWars.Tanks
 
         protected override void DrawExplosion(int x, int y, IMap map)
         {
-            if (y < map.Height)
+            if (y < map.GetHeight())
             {
-                Console.SetCursorPosition(x + 1, map.Height - y);
+                Console.SetCursorPosition(x + 1, map.GetHeight() - y);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("#"); // Liten explosion
                 Console.ResetColor();
                 System.Threading.Thread.Sleep(500); 
-                Console.SetCursorPosition(x + 1, map.Height - y);
+                Console.SetCursorPosition(x + 1, map.GetHeight() - y);
                 Console.Write(" "); 
             }
         }
