@@ -6,10 +6,7 @@ namespace TankWars.Tanks
     public class NormalBullet : BaseBullet
     {
         // Skickar flygbeteendet vidare till BaseBullet
-        public NormalBullet(IAirBehavior behavior) : base(behavior) 
-        {
-            Damage = 50;
-        }
+        public NormalBullet(IAirBehavior behavior) : base(behavior, 50)  { }
 
         protected override void DrawExplosion(int x, int y, IMap map)
         {

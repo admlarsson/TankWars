@@ -6,7 +6,9 @@ namespace TankWars.Factories
     public class BulletFactory
     {
         // Tar nu emot två val från spelaren
-        public IWeapon CreateWeapon(string bulletChoice, string flightChoice)
+        public IWeapon CreateWeapon(
+            string bulletChoice, 
+            string flightChoice)
         {
             // 1. Skapa valt flygbeteende (Implementor)
             IAirBehavior behavior;

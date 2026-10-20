@@ -21,8 +21,10 @@ namespace TankWars.Map
     public abstract class BaseMap : IMap
     {
         // Gemensam data för alla kartor
-        private readonly EntityManager<ITank> _tanks = new EntityManager<ITank>();
-        private readonly EntityManager<IPowerUp> _powerUps = new EntityManager<IPowerUp>();
+        private readonly EntityManager<ITank> _tanks = 
+        new EntityManager<ITank>();
+        private readonly EntityManager<IPowerUp> _powerUps = 
+        new EntityManager<IPowerUp>();
         private readonly int[] _terrainHeights;
         private readonly int _height;
         public BaseMap(int[] heights, int height)

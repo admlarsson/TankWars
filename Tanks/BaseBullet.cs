@@ -1,6 +1,7 @@
 //Ersätter cannon
 
 using System;
+using System.Dynamic;
 using TankWars.Map;
 
 namespace TankWars.Tanks
@@ -19,14 +20,39 @@ namespace TankWars.Tanks
 
     public abstract class BaseBullet : IWeapon
     {
-        public int Damage { get; protected set; }
-        // Skottet "äger" ett beteende (Strategy/Bridge)
+        private readonly int _damage; 
         protected IAirBehavior flightBehavior;
-
-        public BaseBullet(IAirBehavior behavior)
+        
+        public BaseBullet(IAirBehavior behavior, int damage)
         {
             flightBehavior = behavior;
+            _damage = damage;
         }
+        
+        public int GetDamage()
+        {
+            return _damage;
+        }
+
+        protected ConsoleKey? GetInputDuringFlight()
+        {
+              ConsoleKey? keyPressed = null;
+
+                // MAGIN: Kollar om en knapp trycktes ner MEDAN skottet är i luften
+                if (Console.KeyAvailable)
+                {
+                    keyPressed = Console.ReadKey(true).Key;
+                    
+                    // Rensar bufferten ifall spelaren spammar knappen
+                    while (Console.KeyAvailable) Console.ReadKey(true); 
+
+                    
+                }
+            return keyPressed;
+
+        }
+
+
 
         public void Fire(int startX, int startY, double power, int angle, IMap map)
         {
@@ -40,20 +66,11 @@ namespace TankWars.Tanks
 
             while (isFlying)
             {
-                ConsoleKey? keyPressed = null;
-
-                // MAGIN: Kollar om en knapp trycktes ner MEDAN skottet är i luften
-                if (Console.KeyAvailable)
-                {
-                    keyPressed = Console.ReadKey(true).Key;
-                    
-                    // Rensar bufferten ifall spelaren spammar knappen
-                    while (Console.KeyAvailable) Console.ReadKey(true); 
-                }
+                // Kollar om konapp trycks ned under färd
+                ConsoleKey? keyPressed = GetInputDuringFlight();
 
                 // 1. RÖRELSE
-                x += vx;
-                y += vy;
+                x += vx; y += vy;
 
                 // 2. STRATEGY/BRIDGE: Låt beteendet bestämma vad som händer med farten!
                 flightBehavior.UpdateVelocity(ref vx, ref vy, keyPressed);
@@ -61,29 +78,38 @@ namespace TankWars.Tanks
                 int screenX = (int)Math.Round(x);
                 int screenY = (int)Math.Round(y);
 
-                // 3. KANTKONTROLL
+                isFlying = CheckIfStillFlying(screenX, screenY, map);
+                    if (isFlying == false)
+                    {
+                        break;
+                    }
+
+                RenderFlightStep(screenX, screenY, map);    
+            }
+        }
+
+        protected bool CheckIfStillFlying(int screenX, int screenY, IMap map)
+        {
+                
+                //Kantkontroll
                 if (screenX < 0 || screenX >= map.GetTerrainHeights().Length)
                 {
-                    isFlying = false;
-                    break;
+                    return false;
                 }
 
-                // 4. MARKKONTROLL (Träff)
+                // Markkontroll, kollar om den träffar något
                 if (screenY <= map.GetTerrainHeights()[screenX])
                 {
                     // Anropar den abstrakta explosionen (som bestäms av subklasserna!)
                     DrawExplosion(screenX, map.GetTerrainHeights()[screenX] + 1, map);
-                    isFlying = false;
-                    break;
+                    return false;
                 }
 
-                DrawProjectile(screenX, screenY, map);
-                System.Threading.Thread.Sleep(50); // Något långsammare så man hinner reagera
-                EraseProjectile(screenX, screenY, map);
-            }
+                //Ifall vi inte träffade något
+                return true;
         }
 
-        private void DrawProjectile(int x, int y, IMap map)
+        protected void DrawProjectile(int x, int y, IMap map)
         {
             if (y < map.GetHeight())
             {
@@ -94,7 +120,14 @@ namespace TankWars.Tanks
             }
         }
 
-        private void EraseProjectile(int x, int y, IMap map)
+        protected void RenderFlightStep(int x, int y, IMap map)
+        {
+                DrawProjectile(x, y, map);
+                Thread.Sleep(50); // Något långsammare så man hinner reagera
+                EraseProjectile(x, y, map);
+        }
+
+        protected void EraseProjectile(int x, int y, IMap map)
         {
             if (y < map.GetHeight())
             {
@@ -102,6 +135,8 @@ namespace TankWars.Tanks
                 Console.Write(" "); // Bytt från "." till " " för ett renare utseende
             }
         }
+
+
 
         // Tvingar olika skott att ha olika stora explosioner
         protected abstract void DrawExplosion(int x, int y, IMap map);

@@ -8,7 +8,10 @@ namespace TankWars.Tanks
         private double gravity = 0.2;
         private bool hasDropped = false;
 
-        public void UpdateVelocity(ref double vx, ref double vy, ConsoleKey? input)
+        public void UpdateVelocity(
+            ref double vx, 
+            ref double vy, 
+            ConsoleKey? input)
         {
             if (!hasDropped)
             {

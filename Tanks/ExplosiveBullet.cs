@@ -5,10 +5,7 @@ namespace TankWars.Tanks
 {
     public class ExplosiveBullet : BaseBullet
     {
-        public ExplosiveBullet(IAirBehavior behavior) : base(behavior) 
-        { 
-            Damage = 25;
-        }
+        public ExplosiveBullet(IAirBehavior behavior) : base(behavior, 25) { }
 
         protected override void DrawExplosion(int x, int y, IMap map)
         {

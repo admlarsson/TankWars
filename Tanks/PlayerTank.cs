@@ -16,7 +16,8 @@ namespace TankWars.Tanks
 
         public override void Draw()
         {
-            Console.SetCursorPosition(GetX() + 1, GetMap().GetHeight() - GetY());
+            Console.SetCursorPosition(GetX() + 1, 
+            GetMap().GetHeight() - GetY());
             Console.ForegroundColor = ConsoleColor.Cyan; // Spelaren är Cyan
             Console.Write("[P]");
             Console.ResetColor();
