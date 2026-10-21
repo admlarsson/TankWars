@@ -23,6 +23,8 @@ namespace TankWars.Map
             // Så att sinus kurverna inte startar på samma ställe hela tiden
             double randomOffset = _random.NextDouble() * 1000;
 
+            int dynamicGround = maxHeight / 4;
+
             for (int x = 0; x < width; x++)
             {
                 // KONTROLL 1: Är vi ute på kanterna? Då gör vi marken helt platt (vår startplattform)!
@@ -36,10 +38,10 @@ namespace TankWars.Map
                     double shiftedX = x - platformWidth;
 
                     // Vi ritar ut stora, mjuka backar och dalar
-                    double mountainBase = Math.Sin((shiftedX + randomOffset) * 0.1) * 5.0; 
+                    double mountainBase = Math.Sin((shiftedX + randomOffset) * 0.1) * (maxHeight * 0.2); 
 
                     //Vi lägger till små stenar och gupp ovanpå de stora backarna 
-                    double sharpRocks = Math.Sin((shiftedX + randomOffset) * 0.4) * 2.0; 
+                    double sharpRocks = Math.Sin((shiftedX + randomOffset) * 0.4) * (maxHeight * 0.05);
 
                     //Vi lägger ihop allt (Standardhöjden + stora backar + små gupp)
                     double totalHeight = _groundLevel + mountainBase + sharpRocks;

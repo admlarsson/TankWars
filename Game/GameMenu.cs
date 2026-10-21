@@ -53,6 +53,61 @@ public class GameMenu
         return (bulletChoice, flightChoice);
     }
 
+        public void DrawAngleGuide(bool isLeftPlayer)
+        {
+            Console.WriteLine("--- VINKEL-GUIDE ---");
+            if (isLeftPlayer)
+            {
+                // Spelare 1
+                Console.WriteLine("       90");
+                Console.WriteLine("       |   / 60");
+                Console.WriteLine("       |  /");
+                Console.WriteLine("       | /___ 30");
+                Console.WriteLine("  -----+-------- 0");
+            }
+            else
+            {
+                // Spelare 2 eller Datorn
+                Console.WriteLine("       90");
+                Console.WriteLine(" 60 \\   |");
+                Console.WriteLine("     \\  |");
+                Console.WriteLine(" 30 ___\\|");
+                Console.WriteLine("  0 ---+-----");
+            }
+        }
+
+        // NY METOD: Tvingar spelaren att skriva rätt värden!
+        public (int, int) GetShootInput()
+        {
+            int angle, power;
+            
+            // Loopar tills spelaren skriver en giltig vinkel
+            while (true)
+            {
+                Console.Write("\nAnge vinkel (0-90): ");
+                string input = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(input)) { angle = 45; break; } // Standardvärde vid Enter
+                if (int.TryParse(input, out angle) && angle >= 0 && angle <= 90) break;
+                
+                Console.WriteLine("Fel! Du måste skriva en siffra mellan 0 och 90.");
+            }
+
+            // Loopar tills spelaren skriver en giltig kraft
+            while (true)
+            {
+                Console.Write("Ange kraft (1-100): ");
+                string input = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(input)) { power = 50; break; }
+                if (int.TryParse(input, out power) && power >= 1 && power <= 100) break;
+                
+                Console.WriteLine("Fel! Kraften måste vara mellan 1 och 100.");
+            }
+
+            return (angle, power);
+        }
+
+
+
 
 
 }

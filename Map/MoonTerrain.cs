@@ -12,8 +12,8 @@ namespace TankWars.Map
         {
             int [] heights = new int[width];
 
-            double peak = maxHeight/3; //Här bestäms kullens högsta punkt En tredje del av maxHeight
-            double center = width/2; //Gör så att mitten (Högsta punkten) blir exakt i kartans mittpunkt
+            double peak = maxHeight/4.0; //Här bestäms kullens högsta punkt En tredje del av maxHeight
+            double center = width/2.0; //Gör så att mitten (Högsta punkten) blir exakt i kartans mittpunkt
 
             double a = peak / (center * center); //Räknar ut böjningsfaktorn så att kullen ska slutta lagom mycket
 
