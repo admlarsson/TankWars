@@ -2,8 +2,12 @@ using System;
 
 namespace TankWars.Tanks
 {
-    // BRIDGE PATTERN: Implementor
-    // Strategy för hur ett skott rör sig i luften
+    // FALL #5: Strategy Pattern
+    // VAD: IAirBehavior definierar utbytbara flygstrategier.
+    // HUR: BaseBullet tar emot strategin via sin konstruktor;
+    //      BulletFactory väljer GravityBehavior eller DropBehavior.
+    // VARFÖR: Skottets rörelse kan ändras utan att ändra
+    //         projektilens gemensamma flyglogik.
     public interface IAirBehavior
     {
         // 'ref' betyder att metoden kan ändra på skottets faktiska vx och vy
