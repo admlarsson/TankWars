@@ -12,29 +12,25 @@ namespace TankWars.Game
 
             while (applicationRunning)
             {
-                // 1. Datainsamling: Kör menyerna och få en färdig beställningssedel
                 MenuController menuController = new MenuController();
                 GameSettings settings = menuController.CreateSettings();
 
-                // Avbryt om spelaren valde Avsluta (alternativ 4) i huvudmenyn
-                if (settings.GameMode == 4) 
-                {
-                    break;
-                }
+                if (settings.GameMode == 4) break;
+
+                // SKAPAR FABRIKERNA HÄR INNAN MATCHEN BÖRJAR
+                IMapFactory mapFactory = GetMapFactory(settings.MapChoice);
+                var (leftTankFactory, rightTankFactory) = GetTankFactories(settings.GameMode);
 
                 bool playRematch = true;
 
-                // REMATCH-LOOP: Körs så länge spelarna vill spela om med samma inställningar
                 while (playRematch)
                 {
-                    // 2. Produktion: Fabriken bygger en helt ny spelsession utifrån inställningarna
-                    GameFactory factory = new GameFactory();
+                    // INJICERAR DEM I HUVUDFABRIKEN
+                    GameFactory factory = new GameFactory(mapFactory, leftTankFactory, rightTankFactory);
                     GameSession session = factory.CreateGame(settings);
 
-                    // 3. Körning: Startar själva matchen
                     session.Start();
 
-                    // 4. Utvärdering: Matchen är över, fråga om rematch
                     Console.Clear();
                     Console.WriteLine("--- MATCHEN ÄR ÖVER ---");
                     Console.Write("Vill ni spela en Rematch med samma inställningar? (J/N): ");
@@ -42,13 +38,27 @@ namespace TankWars.Game
                     string input = Console.ReadLine()?.Trim().ToUpper();
                     if (input != "J")
                     {
-                        // Bryter den inre loopen och går tillbaka till huvudmenyn
                         playRematch = false; 
                     }
                 }
             }
 
             Console.WriteLine("Tack för att du spelade! Stänger spelet...");
+        }
+
+        // Metoderna sätts till protected för att inte bryta mot blacklisten
+        protected IMapFactory GetMapFactory(string choice)
+        {
+            if (choice == "2") return new EarthMapFactory();
+            if (choice == "3") return new MoonMapFactory();
+            return new TrainingMapFactory();
+        }
+
+        protected (ITankFactory, ITankFactory) GetTankFactories(int modeChoice)
+        {
+            if (modeChoice == 2) return (new PlayerTankFactory(1), new PlayerTankFactory(2));
+            if (modeChoice == 3) return (new BotTankFactory(1), new BotTankFactory(2));
+            return (new PlayerTankFactory(1), new BotTankFactory(2));
         }
     }
 }
