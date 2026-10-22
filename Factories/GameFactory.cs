@@ -11,12 +11,13 @@ namespace TankWars.Factories
         protected readonly ITankFactory _leftTankFactory;
         protected readonly ITankFactory _rightTankFactory;
 
-        // FALL #1: Factory Method Pattern
-        // VAD: Factory Method Pattern (med Beroendeinjektion)
-        // HUR: Vi injicerar abstraktionerna IMapFactory och ITankFactory via konstruktorn. 
-        // VARFÖR: Genom att injicera fabrikerna slipper GameFactory veta exakt vilka kartor eller stridsvagnar 
-        // som ska skapas (t.ex. EarthMapFactory eller MoonMapFactory). Koden blir extremt modulär, och vi uppfyller 
-        // kravet på att fabrikerna faktiskt ska injiceras och inte hårdkodas inuti skapar-klassen.
+        // FALL #3:
+        // VAD: Factory Method Pattern med Beroendeinjektion
+        // HUR: Vi har en hierarki av fabriker (IMapFactory med subtyper) och produkter (IMap med subtyper). 
+        // Abstraktionerna IMapFactory och ITankFactory injiceras i GameFactorys konstruktor.
+        // VARFÖR: GameFactory behöver inte veta *vilken* karta eller tank som skapas, bara *att* den skapas. 
+        // Subtyperna (t.ex. EarthMapFactory och MoonMapFactory) skiljer sig i beteende då de genererar helt olika terräng och instansierar olika kart-objekt.
+
         public GameFactory(
             IMapFactory mapFactory, 
             ITankFactory leftTankFactory, 

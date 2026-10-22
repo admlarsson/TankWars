@@ -2,13 +2,12 @@ using System.Collections.Generic;
 
 namespace TankWars.Core
 {
-    // FALL #1: Generics
-    // VAD: En egen generisk klass (EntityManager<T>).
-    // HUR: Den hanterar en lista av en valfri typ <T> (t.ex. ITank eller IPowerUp). 
-    //      Vi använder "where T : class" för att garantera att det är referenstyper vi hanterar.
-    // VARFÖR: Istället för att skriva tre olika klasser (TankManager, PowerUpManager, PowerDownManager) 
-    //         får vi en enda återanvändbar komponent. Detta minskar kodduplicering markant 
-    //         och gör kartan oberoende av exakt VAD som förvaras på den.
+    // FALL #2:
+    // VAD: Generics (Klass med Type Constraint)
+    // HUR: Vi skapade EntityManager<T> (where T : class). I BaseMap konstrueras den med olika argument: EntityManager<ITank> och EntityManager<IPowerUp>.
+    // VARFÖR: Istället för att skriva separata hanterare för tanks och powerups 
+    // kan vi återanvända samma logik. Typinformationen bibehålls så vi slipper casta objekt när vi plockar ut dem ur listan.
+
     public class EntityManager<T> where T : class
     {
         private readonly List<T> _entities = new List<T>();
