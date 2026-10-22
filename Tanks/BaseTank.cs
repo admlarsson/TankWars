@@ -54,7 +54,7 @@ namespace TankWars.Tanks
         }
 
         // Här är Attack-metoden MED en kropp (måsvingar) som anropar vapnet
-        public void Attack(double power, int angle)
+        public void Attack(int angle, double power)
         {
             int actualAngle = angle;
 

@@ -20,9 +20,9 @@ public class BotTankFactory : ITankFactory
         }
         else
         {
-             _startX = 118;
-            _minX = 108;
-            _maxX = 128;
+            _startX = 168;
+            _minX = 159;
+            _maxX = 178;
             _direction = -1;
         }
     }
