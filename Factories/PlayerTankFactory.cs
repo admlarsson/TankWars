@@ -8,6 +8,7 @@ public class PlayerTankFactory : ITankFactory
     private readonly int _minX;
     private readonly int _maxX;
     private readonly int _direction;
+    protected readonly ConsoleColor _color;
 
     public PlayerTankFactory(int playerNumber)
     {
@@ -17,6 +18,7 @@ public class PlayerTankFactory : ITankFactory
             _minX = 1;
             _maxX = 21;
             _direction = 1;
+            _color = ConsoleColor.Cyan;
         }
         else
         {
@@ -24,12 +26,13 @@ public class PlayerTankFactory : ITankFactory
             _minX = 159;
             _maxX = 178;
             _direction = -1;
+            _color = ConsoleColor.Red;
         }
     }
 
     public ITank CreateTank(IMap map, IWeapon weapon)
     {
-        return new PlayerTank(_startX, _minX, _maxX, _direction, map, weapon);
+        return new PlayerTank(_startX, _minX, _maxX, _direction, map, weapon, _color);
     }
             
 }

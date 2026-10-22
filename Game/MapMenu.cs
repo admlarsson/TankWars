@@ -1,18 +1,33 @@
-using System.Text;
+using System;
 using TankWars.Menu;
 
-public class MapMenu : IMenu<string>
+namespace TankWars.Menu
 {
-    public string RunMenu()
+    public class MapMenu : IMenu<string>
     {
-        Console.Clear();
-        Console.WriteLine("1. Spela på Träningsbana");
-        Console.WriteLine("2. Spela på Jorden");
-        Console.WriteLine("3. Spela på Månen");
-        Console.WriteLine("4. Avsluta spelet");
-        Console.Write("\nVälj ett alternativ (1-4): ");
+        public string RunMenu()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("--- KARTVAL ---");
+                Console.WriteLine("1. Spela på Träningsbana");
+                Console.WriteLine("2. Spela på Jorden");
+                Console.WriteLine("3. Spela på Månen");
+                Console.WriteLine("0. Gå tillbaka till Huvudmenyn");
+                Console.Write("\nVälj ett alternativ (0-3): ");
 
-        return Console.ReadLine();
+                string input = Console.ReadLine()?.Trim();
+
+                if (input == "0" || input == "1" || input == "2" || input == "3")
+                {
+                    return input;
+                }
+
+                Console.WriteLine("Ogiltigt val! Du måste skriva 0, 1, 2 eller 3.");
+                Console.WriteLine("Tryck ENTER för att försöka igen...");
+                Console.ReadLine();
+            }
+        }
     }
-
 }

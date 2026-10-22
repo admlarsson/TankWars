@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using TankWars.Map;
 
 namespace TankWars.Tanks
@@ -7,13 +8,13 @@ namespace TankWars.Tanks
     {
         public int X { get; protected set; }
         public int Y { get; protected set; }
-        public int HP { get; }
+        public int HP { get; protected set; }
         public IMap Map { get; }
         private readonly IWeapon _weapon;
 
         private readonly int _minX;
         private readonly int _maxX;
-        private readonly int _direction;
+        protected readonly int _direction;
 
        
 
@@ -33,6 +34,12 @@ namespace TankWars.Tanks
             Map = map;
             _weapon = weapon;
             SetPosition(startX); 
+        }
+
+        public void TakeDamage(int amount)
+        {
+            HP -= amount;
+            if(HP < 0) HP = 0;
         }
 
         public void SetPosition(int x)

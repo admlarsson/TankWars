@@ -85,23 +85,27 @@ namespace TankWars.Tanks
 
         protected bool CheckIfStillFlying(int screenX, int screenY, IMap map)
         {
-                
-                //Kantkontroll
-                if (screenX < 0 || screenX >= map.TerrainHeights.Length)
+            if (screenX < 0 || screenX >= map.TerrainHeights.Length) return false;
+
+            // 1. Markkontroll: Träffade vi marken?
+            if (screenY <= map.TerrainHeights[screenX])
+            {
+                Explode(screenX, map.TerrainHeights[screenX] + 1, map);
+                return false;
+            }
+
+            // 2. Tank-kontroll (Hitbox): Träffade vi en tank i luften?
+            foreach (ITank tank in map.Tanks.All)
+            {
+                // Om skottet är max 1 block ifrån tanken (i X och Y), detonera!
+                if (Math.Abs(screenX - tank.X) <= 2 && Math.Abs(screenY - tank.Y) <= +2)
                 {
+                    Explode(screenX, screenY, map);
                     return false;
                 }
+            }
 
-                // Markkontroll, kollar om den träffar något
-                if (screenY <= map.TerrainHeights[screenX])
-                {
-                    // Anropar den abstrakta explosionen (som bestäms av subklasserna!)
-                    DrawExplosion(screenX, map.TerrainHeights[screenX] + 1, map);
-                    return false;
-                }
-
-                //Ifall vi inte träffade något
-                return true;
+            return true;
         }
 
         protected void DrawProjectile(int x, int y, IMap map)
@@ -117,9 +121,9 @@ namespace TankWars.Tanks
 
         protected void RenderFlightStep(int x, int y, IMap map)
         {
-                DrawProjectile(x, y, map);
-                Thread.Sleep(50); // Något långsammare så man hinner reagera
-                EraseProjectile(x, y, map);
+            DrawProjectile(x, y, map);
+            Thread.Sleep(50);
+            EraseProjectile(x, y, map);
         }
 
         protected void EraseProjectile(int x, int y, IMap map)
@@ -127,13 +131,42 @@ namespace TankWars.Tanks
             if (y < map.Height)
             {
                 Console.SetCursorPosition(x + 1, map.Height - y);
-                Console.Write(" "); // Bytt från "." till " " för ett renare utseende
+                Console.Write(" "); 
+            }
+        }
+
+        // Hjälpmetod för att dela ut skada till alla tanks inom en viss radie (Undviker kodduplicering)
+        protected void DealAreaDamage(int hitX, IMap map, int blastRadius)
+        {
+            foreach (ITank tank in map.Tanks.All)
+            {
+                if (Math.Abs(tank.X - hitX) <= blastRadius)
+                {
+                    tank.TakeDamage(Damage);
+                    
+                    // Skriver ut skadan EXAKT ovanför den stridsvagn som blev träffad
+                    int textX = Math.Max(0, tank.X - 5); 
+                    int textY = Math.Max(0, map.Height - tank.Y - 2); 
+                    
+                    Console.SetCursorPosition(textX, textY);
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write($" -{Damage} HP! ");
+                    Console.ResetColor();
+                    
+                    System.Threading.Thread.Sleep(1500); 
+                    
+                    // Suddar ut texten efter 1,5 sekunder
+                    Console.SetCursorPosition(textX, textY);
+                    Console.Write("           ");
+                }
             }
         }
 
 
 
-        // Tvingar olika skott att ha olika stora explosioner
-        protected abstract void DrawExplosion(int x, int y, IMap map);
+
+        // Ersätter DrawExplosion. Tvingar subklasserna att bestämma både utseende OCH skaderadie.
+        protected abstract void Explode(int x, int y, IMap map);
+
     }
 }

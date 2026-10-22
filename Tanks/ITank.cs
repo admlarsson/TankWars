@@ -13,6 +13,7 @@ public interface ITank
     void MoveRight();
     void Draw();
     void Attack(int angle, double power);
+    void TakeDamage(int amount);
     
 }   
 }

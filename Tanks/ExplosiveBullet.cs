@@ -1,4 +1,5 @@
 using System;
+using System.IO.MemoryMappedFiles;
 using TankWars.Map;
 
 namespace TankWars.Tanks
@@ -7,7 +8,7 @@ namespace TankWars.Tanks
     {
         public ExplosiveBullet(IAirBehavior behavior) : base(behavior, 25) { }
 
-        protected override void DrawExplosion(int x, int y, IMap map)
+        protected override void Explode(int x, int y, IMap map)
         {
             if (y < map.Height)
             {
@@ -20,6 +21,7 @@ namespace TankWars.Tanks
                 Console.SetCursorPosition(Math.Max(1, x), map.Height - y);
                 Console.Write("   "); 
             }
+            DealAreaDamage(x, map, 2);
         }
     }
 }
