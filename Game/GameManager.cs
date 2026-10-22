@@ -70,8 +70,8 @@ namespace TankWars.Game
             ITank tank1 = leftFac.CreateTank(map, w1);
             ITank tank2 = rigthFac.CreateTank(map, w2);
 
-            map.GetTanks().Add(tank1);
-            map.GetTanks().Add(tank2);
+            map.Tanks.Add(tank1);
+            map.Tanks.Add(tank2);
             RunGameLoop(map, tank1, tank2, modechoice);
         }
 
@@ -84,7 +84,7 @@ namespace TankWars.Game
             turnManager.AddTank(tank2);
 
             bool gameRunning = true;
-            while(gameRunning && turnManager.GetAliveCount() > 1)
+            while(gameRunning && turnManager.AliveCount > 1)
             {
                 ITank currentTank = turnManager.GetNextTank();
                 string playerName = "Spelare 1";
@@ -107,10 +107,10 @@ namespace TankWars.Game
                 Console.Clear();
                 map.Draw();
                 
-                Console.SetCursorPosition(0, map.GetHeight() + 2);
+                Console.SetCursorPosition(0, map.Height + 2);
                 // Skriver ut vems tur det är extra tydligt
                 Console.WriteLine($"*** TUREN ÄR DIN, {playerName.ToUpper()}! ***");
-                Console.WriteLine($"[ Position X: {tank.GetX()} | HP: {tank.GetHP()} ]");
+                Console.WriteLine($"[ Position X: {tank.X} | HP: {tank.HP} ]");
                 Console.WriteLine("Pilar = Kör | SPACE = Skjut | ESC = Avsluta");
 
                 HandleInput(tank, map, ref isTurnActive, ref gameRunning);
@@ -138,10 +138,10 @@ namespace TankWars.Game
         protected void ExecuteShoot(ITank tank, IMap map)
         {
             // Sätt markören under spelplanen
-            Console.SetCursorPosition(0, map.GetHeight() + 6);
+            Console.SetCursorPosition(0, map.Height + 6);
             
             // 1. Rita guiden (kollar om tanken är på vänstra halvan)
-            _menu.DrawAngleGuide(tank.GetX() < 90);
+            _menu.DrawAngleGuide(tank.X < 90);
 
             // 2. Hämta godkända värden från menyn!
             var (angle, power) = _menu.GetShootInput();
@@ -152,4 +152,3 @@ namespace TankWars.Game
         }
     }
 }
-

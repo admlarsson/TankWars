@@ -16,8 +16,8 @@ namespace TankWars.Tanks
 
         public override void Draw()
         {
-            Console.SetCursorPosition(GetX() + 1, 
-            GetMap().GetHeight() - GetY());
+            Console.SetCursorPosition(X + 1,
+            Map.Height - Y);
             Console.ForegroundColor = ConsoleColor.Red; // Boten är Röd
             Console.Write("[B]");
             Console.ResetColor();

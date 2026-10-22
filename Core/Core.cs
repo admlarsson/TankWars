@@ -24,9 +24,6 @@ namespace TankWars.Core
         }
 
         // Returnerar alla entiteter så att Kartan kan loopa igenom och rita dem
-        public IEnumerable<T> GetAll()
-        {
-            return _entities;
-        }
+        public IEnumerable<T> All => _entities;
     }
 }

@@ -14,10 +14,7 @@ namespace TankWars.Core
             _tanks.Add(tank);
         }
 
-        public int GetAliveCount()
-        {
-            return _tanks.Count;
-        }
+        public int AliveCount => _tanks.Count;
 
         // Iterator-metoden som hämtar nästa spelare
         public ITank GetNextTank()
@@ -41,7 +38,7 @@ namespace TankWars.Core
                 ITank currentTank = _tanks[_currentIndex];
 
                 // 4. Lever den? Returnera den!
-                if (currentTank.GetHP() > 0)
+                if (currentTank.HP > 0)
                 {
                     return currentTank;
                 }

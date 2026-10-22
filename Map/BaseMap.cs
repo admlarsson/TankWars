@@ -21,36 +21,16 @@ namespace TankWars.Map
     public abstract class BaseMap : IMap
     {
         // Gemensam data för alla kartor
-        private readonly EntityManager<ITank> _tanks = 
+        public EntityManager<ITank> Tanks { get; } =
         new EntityManager<ITank>();
-        private readonly EntityManager<IPowerUp> _powerUps = 
+        public EntityManager<IPowerUp> PowerUps { get; } =
         new EntityManager<IPowerUp>();
-        private readonly int[] _terrainHeights;
-        private readonly int _height;
+        public int[] TerrainHeights { get; }
+        public int Height { get; }
         public BaseMap(int[] heights, int height)
         {
-            _terrainHeights = heights;
-            _height = height;
-        }
-
-        public int GetHeight()
-        {
-            return _height;
-        }
-
-        public int[] GetTerrainHeights()
-        {
-            return _terrainHeights;
-        }
-
-        public EntityManager<ITank> GetTanks()
-        {
-            return _tanks;
-        }
-
-        public EntityManager<IPowerUp> GetPowerUps()
-        {
-            return _powerUps;
+            TerrainHeights = heights;
+            Height = height;
         }
 
         public void Draw()
@@ -71,10 +51,10 @@ namespace TankWars.Map
 
         protected void DrawFrame()
         {
-            int width = _terrainHeights.Length;
+            int width = TerrainHeights.Length;
             DrawBorder('╔', '═', '╗', width);
 
-            for (int y = _height - 1; y >= 0; y--)
+            for (int y = Height - 1; y >= 0; y--)
             {
                 DrawRow(y, width);
             }
@@ -94,7 +74,7 @@ namespace TankWars.Map
 
             for (int x = 0; x < width; x++)
             {
-                DrawCoordinate(x, y, _terrainHeights[x]);
+                DrawCoordinate(x, y, TerrainHeights[x]);
             }
 
             SetFrameColor();
@@ -103,7 +83,7 @@ namespace TankWars.Map
 
         protected void DrawTanks()
         {
-            foreach(ITank tank in _tanks.GetAll())
+            foreach(ITank tank in Tanks.All)
             {
                 tank.Draw();
             }

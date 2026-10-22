@@ -3,9 +3,9 @@ namespace TankWars.Tanks
 
 public interface ITank
 {
-    int GetX();
-    int GetY();
-    int GetHP();
+    int X { get; }
+    int Y { get; }
+    int HP { get; }
     
     
 

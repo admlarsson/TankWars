@@ -20,20 +20,15 @@ namespace TankWars.Tanks
 
     public abstract class BaseBullet : IWeapon
     {
-        private readonly int _damage; 
+        public int Damage { get; }
         protected IAirBehavior flightBehavior;
         
         public BaseBullet(IAirBehavior behavior, int damage)
         {
             flightBehavior = behavior;
-            _damage = damage;
+            Damage = damage;
         }
         
-        public int GetDamage()
-        {
-            return _damage;
-        }
-
         protected ConsoleKey? GetInputDuringFlight()
         {
               ConsoleKey? keyPressed = null;
@@ -92,16 +87,16 @@ namespace TankWars.Tanks
         {
                 
                 //Kantkontroll
-                if (screenX < 0 || screenX >= map.GetTerrainHeights().Length)
+                if (screenX < 0 || screenX >= map.TerrainHeights.Length)
                 {
                     return false;
                 }
 
                 // Markkontroll, kollar om den träffar något
-                if (screenY <= map.GetTerrainHeights()[screenX])
+                if (screenY <= map.TerrainHeights[screenX])
                 {
                     // Anropar den abstrakta explosionen (som bestäms av subklasserna!)
-                    DrawExplosion(screenX, map.GetTerrainHeights()[screenX] + 1, map);
+                    DrawExplosion(screenX, map.TerrainHeights[screenX] + 1, map);
                     return false;
                 }
 
@@ -111,9 +106,9 @@ namespace TankWars.Tanks
 
         protected void DrawProjectile(int x, int y, IMap map)
         {
-            if (y < map.GetHeight())
+            if (y < map.Height)
             {
-                Console.SetCursorPosition(x + 1, map.GetHeight() - y);
+                Console.SetCursorPosition(x + 1, map.Height - y);
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("*");
                 Console.ResetColor();
@@ -129,9 +124,9 @@ namespace TankWars.Tanks
 
         protected void EraseProjectile(int x, int y, IMap map)
         {
-            if (y < map.GetHeight())
+            if (y < map.Height)
             {
-                Console.SetCursorPosition(x + 1, map.GetHeight() - y);
+                Console.SetCursorPosition(x + 1, map.Height - y);
                 Console.Write(" "); // Bytt från "." till " " för ett renare utseende
             }
         }
