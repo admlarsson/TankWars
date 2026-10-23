@@ -5,19 +5,6 @@ using TankWars.Tanks;
 
 namespace TankWars.Map
 {
-    // FALL #3:
-    // Generics. Oklart om vi använder 
-    //
-    // Vi har skapat en egen generisk typ EntityManager<T> med begränsningen 'where T : IGameObject'.
-    // Den konstrueras med olika typ-argument i vår BaseMap: en för <ITank> och en för <IPowerUp>.
-    //
-    // VARFÖR använder ni konceptet (och varför krävs T framför en supertyp)?
-    // Typinformationen måste bibehållas för att undvika osäker typkonvertering (casting). 
-    // Om vi hade använt en vanlig List<IGameObject> hade t.ex. GetEntityAt(x) returnerat ett 
-    // IGameObject. Eftersom vi använder T returnerar EntityManager<ITank> specifikt en ITank, 
-    // vilket gör att vi kommer åt tank-specifika egenskaper utan casting.
-    // Begränsningen (where T : IGameObject) krävs för att koden ska kompilera när vi anropar 
-    // objektens egenskaper internt.
     public abstract class BaseMap : IMap
     {
         // Gemensam data för alla kartor
@@ -63,9 +50,7 @@ namespace TankWars.Map
             DrawBorder('╚', '═', '╝', width);
         }
 
-        // FALL #6 (För er lista!): Template Method Pattern
-        // En "Hook" (krok) som låter subklasser injicera egen utritning i mitten av Draw-algoritmen.
-        // Om subklassen inte "overridar" den, händer ingenting (vilket är perfekt för TrainingMap).
+    
         public virtual void DrawDecorations() 
         { 
             // Standard är att inte rita något extra
