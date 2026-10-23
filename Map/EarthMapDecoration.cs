@@ -6,19 +6,24 @@ namespace TankWars.Map
     {
         public void Draw(int[] terrainHeights)
         {
-            int moonX = terrainHeights.Length - 15;
-            
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            
-            Console.SetCursorPosition(moonX, 3);
-            Console.Write(" ▄███▄ ");
-            
-            Console.SetCursorPosition(moonX, 4);
-            Console.Write("███████");
-            
-            Console.SetCursorPosition(moonX, 5);
-            Console.Write(" ▀███▀ ");
-            
+            int moonX = terrainHeights.Length - 35;
+
+            string[] crescent =
+            {
+                "   ▄██",
+                "  ███▀",
+                " ███▀ ",
+                "  ███▄",
+                "   ▀██"
+            };
+
+            Console.ForegroundColor = ConsoleColor.Gray;
+            for (int i = 0; i < crescent.Length; i++)
+            {
+                Console.SetCursorPosition(moonX, 2 + i);
+                Console.Write(crescent[i]);
+            }
+
             Console.ResetColor();
         }
     }
