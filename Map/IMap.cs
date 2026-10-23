@@ -15,5 +15,6 @@ namespace TankWars.Map
         EntityManager<IPowerUp> PowerUps { get; }
 
         void Draw();
+        void DrawDecorations();
     }
 }

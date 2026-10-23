@@ -36,6 +36,7 @@ namespace TankWars.Map
         public void Draw()
         {
             DrawFrame();
+            DrawDecorations();
             DrawTanks();
             Console.ResetColor();
         }
@@ -60,6 +61,14 @@ namespace TankWars.Map
             }
 
             DrawBorder('╚', '═', '╝', width);
+        }
+
+        // FALL #6 (För er lista!): Template Method Pattern
+        // En "Hook" (krok) som låter subklasser injicera egen utritning i mitten av Draw-algoritmen.
+        // Om subklassen inte "overridar" den, händer ingenting (vilket är perfekt för TrainingMap).
+        public virtual void DrawDecorations() 
+        { 
+            // Standard är att inte rita något extra
         }
         protected void DrawBorder(char left, char fill, char right, int width)
         {

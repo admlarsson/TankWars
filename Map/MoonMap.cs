@@ -25,5 +25,14 @@ namespace TankWars.Map
                 Console.Write(" "); // Tom rymd
             }
         }
+
+        // Delegerar arbetet till den nya klassen
+        public override void DrawDecorations()
+        {
+            MoonDecoration decoration = new MoonDecoration();
+            decoration.Draw(Height, TerrainHeights);
+        }
+
+
     }
 }

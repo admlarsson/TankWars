@@ -28,5 +28,14 @@ namespace TankWars.Map
                 Console.Write(" "); // Tom himmel
             }
         }
+
+        // Delegerar arbetet till den nya klassen
+        public override void DrawDecorations()
+        {
+            EarthDecoration decoration = new EarthDecoration();
+            decoration.Draw(TerrainHeights);
+        }
+
+
     }
 }

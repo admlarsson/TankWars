@@ -124,6 +124,8 @@ namespace TankWars.Tanks
             DrawProjectile(x, y, map);
             Thread.Sleep(50);
             EraseProjectile(x, y, map);
+
+            map.DrawDecorations(); // Gör så att exmpelvis flaggan inte går sönder
         }
 
         protected void EraseProjectile(int x, int y, IMap map)
