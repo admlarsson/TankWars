@@ -88,22 +88,22 @@ namespace TankWars.Tanks
             // 1. Markkontroll: Träffade vi marken?
             if (screenY <= map.TerrainHeights[screenX])
             {
-                Explode(screenX, map.TerrainHeights[screenX] + 1, map);
+                Explode(screenX, map.TerrainHeights[screenX] + 1, map, null);
                 return false;
             }
 
-            // 2. Tank-kontroll (Hitbox): Träffade vi en tank i luften?
+            return !CheckTankCollision(screenX, screenY, map);
+        }
+
+        protected bool CheckTankCollision(int x, int y, IMap map)
+        {
             foreach (ITank tank in map.Tanks.All)
             {
-                // Om skottet är max 1 block ifrån tanken (i X och Y), detonera!
-                if (Math.Abs(screenX - tank.X) <= 2 && Math.Abs(screenY - tank.Y) <= +2)
-                {
-                    Explode(screenX, screenY, map);
-                    return false;
-                }
+                if (!tank.IsHitAt(x, y)) continue;
+                Explode(x, y, map, tank);
+                return true;
             }
-
-            return true;
+            return false;
         }
 
         protected void DrawProjectile(int x, int y, IMap map)
@@ -140,33 +140,29 @@ namespace TankWars.Tanks
         {
             foreach (ITank tank in map.Tanks.All)
             {
-                if (Math.Abs(tank.X - hitX) <= blastRadius)
-                {
-                    tank.TakeDamage(Damage);
-                    
-                    // Skriver ut skadan EXAKT ovanför den stridsvagn som blev träffad
-                    int textX = Math.Max(0, tank.X - 5); 
-                    int textY = Math.Max(0, map.Height - tank.Y - 2); 
-                    
-                    Console.SetCursorPosition(textX, textY);
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write($" -{Damage} HP! ");
-                    Console.ResetColor();
-                    
-                    System.Threading.Thread.Sleep(1500); 
-                    
-                    // Suddar ut texten efter 1,5 sekunder
-                    Console.SetCursorPosition(textX, textY);
-                    Console.Write("           ");
-                }
+                if (Math.Abs(tank.X - hitX) <= blastRadius) DealDamage(tank, map);
             }
+        }
+
+        protected void DealDamage(ITank tank, IMap map)
+        {
+            tank.TakeDamage(Damage);
+            int textX = Math.Max(0, tank.X - 5);
+            int textY = Math.Max(0, map.Height - tank.Y - 2);
+            Console.SetCursorPosition(textX, textY);
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write($" -{Damage} HP! ");
+            Console.ResetColor();
+            Thread.Sleep(1500);
+            Console.SetCursorPosition(textX, textY);
+            Console.Write("           ");
         }
 
 
 
 
         // Ersätter DrawExplosion. Tvingar subklasserna att bestämma både utseende OCH skaderadie.
-        protected abstract void Explode(int x, int y, IMap map);
+        protected abstract void Explode(int x, int y, IMap map, ITank? hitTank);
 
     }
 }

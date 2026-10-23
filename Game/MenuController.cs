@@ -1,4 +1,5 @@
 using TankWars.Core;
+using TankWars.Factories;
 using TankWars.Menu;
 
 namespace TankWars.Game
@@ -10,7 +11,7 @@ namespace TankWars.Game
             var settings = new GameSettings();
             int step = 1;
 
-            // Loopar tills vi når steg 5 (Då är vi färdiga)
+            // Menyernas objekt sparas i settings; stegen styr bara framåt- och bakåtnavigering.
             while (step > 0 && step < 5)
             {
                 if (step == 1) step = HandleGameMode(settings);
@@ -25,44 +26,37 @@ namespace TankWars.Game
         protected int HandleGameMode(GameSettings settings)
         {
             settings.GameMode = new GameModeMenu().RunMenu();
-            
-            if (settings.GameMode == 4) return 5; // Spelaren valde "Avsluta". Hoppa ur loopen.
-            
+            if (settings.GameMode.ShouldExit) return 5;
             return 2; // Gå framåt till steg 2
         }
 
         protected int HandleMapChoice(GameSettings settings)
         {
-            settings.MapChoice = new MapMenu().RunMenu();
-            
-            if (settings.MapChoice == "0") return 1; // Spelaren valde 0. BACKA till steg 1!
-            
+            IMapFactory? mapFactory = new MapMenu().RunMenu();
+            if (mapFactory is null) return 1;
+            settings.MapFactory = mapFactory;
             return 3; // Gå framåt till steg 3
         }
 
         protected int HandlePlayer1Weapon(GameSettings settings)
         {
-            if (settings.GameMode == 3) return 4; // Datorer väljer inte vapen. Hoppa till nästa.
+            if (!settings.GameMode.Player1ChoosesWeapon) return 4;
 
-            var (b1, f1) = new WeaponMenu("Spelare 1").RunMenu();
-            
-            if (b1 == "0") return 2; // BACKA till Kartvalet!
-
-            settings.Player1Bullet = b1;
-            settings.Player1Flight = f1;
+            var (weaponFactory, airBehavior) = new WeaponMenu("Spelare 1").RunMenu();
+            if (weaponFactory is null || airBehavior is null) return 2;
+            settings.Player1WeaponFactory = weaponFactory;
+            settings.Player1AirBehavior = airBehavior;
             return 4; // Gå framåt
         }
 
         protected int HandlePlayer2Weapon(GameSettings settings)
         {
-            if (settings.GameMode != 2) return 5; // Endast PvP behöver vapen för spelare 2. Klar!
+            if (!settings.GameMode.Player2ChoosesWeapon) return 5;
 
-            var (b2, f2) = new WeaponMenu("Spelare 2").RunMenu();
-            
-            if (b2 == "0") return 3; // BACKA till Spelare 1:s vapenval!
-
-            settings.Player2Bullet = b2;
-            settings.Player2Flight = f2;
+            var (weaponFactory, airBehavior) = new WeaponMenu("Spelare 2").RunMenu();
+            if (weaponFactory is null || airBehavior is null) return 3;
+            settings.Player2WeaponFactory = weaponFactory;
+            settings.Player2AirBehavior = airBehavior;
             return 5; // Gå framåt (Färdigt!)
         }
     }

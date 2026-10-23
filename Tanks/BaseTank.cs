@@ -1,11 +1,14 @@
 using System;
 using System.Data;
+using System.Reflection.PortableExecutable;
 using TankWars.Map;
 
 namespace TankWars.Tanks
 {
     public abstract class BaseTank : ITank 
     {
+
+        protected const int MaxHP = 100;
         public int X { get; protected set; }
         public int Y { get; protected set; }
         public int HP { get; protected set; }
@@ -27,7 +30,7 @@ namespace TankWars.Tanks
             IMap map, 
             IWeapon weapon)
         {
-            HP = 100;
+            HP = MaxHP;
             _minX = minX; 
             _maxX = maxX; 
             _direction = direction; // Spara riktningen
@@ -40,6 +43,16 @@ namespace TankWars.Tanks
         {
             HP -= amount;
             if(HP < 0) HP = 0;
+        }
+
+        public bool IsHitAt(int projectileX, int projectileY)
+        {
+            int tankLeft = Math.Max(0, X - 1);
+            int projectileColumn = projectileX + 1;
+            int tankBottomRow = Map.Height - Y;
+            int projectileRow = Map.Height - projectileY;
+            return projectileColumn >= tankLeft && projectileColumn <= tankLeft + 3
+                && projectileRow >= tankBottomRow - 2 && projectileRow <= tankBottomRow;
         }
 
         public void SetPosition(int x)
@@ -74,6 +87,20 @@ namespace TankWars.Tanks
             }
 
             _weapon.Fire(X, Y, power, actualAngle, Map);
+        }
+
+        public void Heal(int amount)
+        {
+            if(amount < 0)
+                throw new ArgumentOutOfRangeException(nameof(amount));
+
+            if(amount > MaxHP - HP)
+            {
+                HP = MaxHP;
+                return;
+            }
+
+            HP += amount;
         }
 
         // Dessa MÅSTE vara 'public abstract' och sluta med semikolon

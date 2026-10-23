@@ -8,7 +8,7 @@ namespace TankWars.Tanks
     {
         public ExplosiveBullet(IAirBehavior behavior) : base(behavior, 25) { }
 
-        protected override void Explode(int x, int y, IMap map)
+        protected override void Explode(int x, int y, IMap map, ITank? hitTank)
         {
             if (y < map.Height)
             {

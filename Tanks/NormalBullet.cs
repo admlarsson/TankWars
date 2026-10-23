@@ -8,7 +8,7 @@ namespace TankWars.Tanks
         // Skickar flygbeteendet vidare till BaseBullet
         public NormalBullet(IAirBehavior behavior) : base(behavior, 50)  { }
 
-        protected override void Explode(int x, int y, IMap map)
+        protected override void Explode(int x, int y, IMap map, ITank? hitTank)
         {
             if (y < map.Height)
             {
@@ -20,7 +20,8 @@ namespace TankWars.Tanks
                 Console.SetCursorPosition(x + 1, map.Height - y);
                 Console.Write(" "); 
             }
-            DealAreaDamage(x, map, 0);
+            if (hitTank is not null) DealDamage(hitTank, map);
+            else DealAreaDamage(x, map, 0);
         }
     }
 }

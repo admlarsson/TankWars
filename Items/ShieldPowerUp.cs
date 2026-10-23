@@ -1,0 +1,34 @@
+using System;
+using TankWars.Tanks;
+
+namespace TankWars.Items
+{
+    public class ShieldPowerUp : IPowerUp
+    {
+        protected readonly int _mapHeight;
+
+        public int X { get; }
+        public int Y { get; }
+
+        public ShieldPowerUp(int x, int y, int mapHeight)
+        {
+            X = x;
+            Y = y;
+            _mapHeight = mapHeight;
+        }
+
+        public void Draw()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.SetCursorPosition(X + 1, _mapHeight - Y);
+            Console.Write("S");
+            Console.ResetColor();
+        }
+
+        public void ApplyEffect(ITank tank)
+        {
+            throw new NotSupportedException(
+                "Shield effects will be implemented with the pickup mechanics.");
+        }
+    }
+}

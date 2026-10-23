@@ -1,11 +1,11 @@
 namespace TankWars.Menu
 {
-    // FALL #1:
+    // FALL #2:
     // VAD: Generics
-    // HUR: Vi har skapat det generiska gränssnittet IMenu<T> som konstrueras med olika typ-argument i våra menyer 
-    // (t.ex. IMenu<int> i GameModeMenu och IMenu<string> i MapMenu).
-    // VARFÖR: Det tvingar alla menyer att implementera RunMenu() med rätt returtyp utan typ-testning eller osäker casting. Koden i MenuController blir enklare och 100 % typsäker.
-
+    // HUR: IMenu<T> används med konkreta returtyper som IMapFactory,
+    // IGameModeStrategy och vapenvalets fabrik/beteende-tuple.
+    // VARFÖR: Varje meny lämnar vidare ett typsäkert objekt utan att anroparen
+    // behöver casta eller tolka en primitiv valkod.
     public interface IMenu<T>
     {
         T RunMenu();

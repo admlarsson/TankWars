@@ -56,7 +56,7 @@ namespace TankWars.Map
         {
             string[] earth = {
                 "      IIIII      ", "   WWWWWWWWWWW   ", "  WWLLLLWWWWWWW  ",
-                " WWLLLLLLWWWWWWW ", " WWWLLLLWWWWWWWW ", " WWWWLLLWWWWWWWW ",
+                " WWLLLLLLWWWWWWL ", " WWWLLLLWWWWWWLL ", " WWWWLLLWWWWWWWL ",
                 "  WWWWWWWWWWWWW  ", "   WWWWWWWWWWW   ", "      IIIII      "
             };
             for (int i = 0; i < earth.Length; i++)

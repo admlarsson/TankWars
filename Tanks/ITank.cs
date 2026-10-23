@@ -13,7 +13,9 @@ public interface ITank
     void MoveRight();
     void Draw();
     void Attack(int angle, double power);
+    bool IsHitAt(int projectileX, int projectileY);
     void TakeDamage(int amount);
+    void Heal(int amount);
     
 }   
 }

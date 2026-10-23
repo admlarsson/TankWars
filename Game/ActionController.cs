@@ -10,8 +10,10 @@ namespace TankWars.Game
         {
             switch (Console.ReadKey(true).Key)
             {
-                case ConsoleKey.LeftArrow: tank.MoveLeft(); break;
-                case ConsoleKey.RightArrow: tank.MoveRight(); break;
+                case ConsoleKey.LeftArrow: tank.MoveLeft();
+                    map.CheckPowerUpPickup(tank); break;
+                case ConsoleKey.RightArrow: tank.MoveRight();
+                    map.CheckPowerUpPickup(tank); break;
                 case ConsoleKey.Escape: gameRunning = false; break;
                 case ConsoleKey.Spacebar:
                     ExecuteShoot(tank, map);

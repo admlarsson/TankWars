@@ -16,5 +16,6 @@ namespace TankWars.Map
 
         void Draw();
         void DrawDecorations();
+        void CheckPowerUpPickup(ITank tank);
     }
 }

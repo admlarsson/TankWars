@@ -2,14 +2,13 @@ using System.Collections.Generic;
 
 namespace TankWars.Core
 {
-    // FALL #2:
-    // VAD: Generics (Klass med Type Constraint)
-    // HUR: Vi skapade EntityManager<T> (where T : class). I BaseMap konstrueras den med olika argument: 
-    // EntityManager<ITank> och EntityManager<IPowerUp>.
-    // VARFÖR: Istället för att skriva separata hanterare för tanks och powerups 
-    // kan vi återanvända samma logik. Typinformationen bibehålls så vi slipper casta objekt när vi plockar ut dem ur listan.
-
-    public class EntityManager<T> where T : class
+    // FALL #1:
+    // VAD: Generics
+    // HUR: EntityManager<T> används som EntityManager<ITank> och
+    // EntityManager<IPowerUp>. Add, Remove och All arbetar med T direkt.
+    // VARFÖR: Samma typsäkra hanteringslogik fungerar för olika entitetstyper
+    // utan separata manager-klasser eller casting när entiteter hämtas.
+    public class EntityManager<T>
     {
         private readonly List<T> _entities = new List<T>();
 

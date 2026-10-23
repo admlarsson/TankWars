@@ -1,9 +1,13 @@
 using System;
+using TankWars.Factories;
 using TankWars.Menu;
+using TankWars.Tanks;
 
 namespace TankWars.Menu
 {
-    public class WeaponMenu : IMenu<(string, string)>
+    // Vapenmenyn väljer två samverkande objekt: en vapenfabrik och ett
+    // flygbeteende. Vapenfabriken kombinerar beteendet med rätt ammunition.
+    public class WeaponMenu : IMenu<(IWeaponFactory?, IAirBehavior?)>
     {
         protected readonly string _playerName;
 
@@ -12,40 +16,51 @@ namespace TankWars.Menu
             _playerName = playerName;
         }
 
-        public (string, string) RunMenu()
+        public (IWeaponFactory?, IAirBehavior?) RunMenu()
         {
             Console.Clear();
             Console.WriteLine($"--- {_playerName.ToUpper()}: BYGG DITT VAPEN ---");
-            
             Console.WriteLine("Steg 1: Välj Ammunitionstyp");
             Console.WriteLine("1. Normal (Liten träffyta, 50 Skada)");
             Console.WriteLine("2. Explosiv (Stor träffyta, 25 Skada)");
             Console.WriteLine("0. Gå tillbaka");
-            
-            string bChoice = GetValidChoice("Val (0-2): ", "0", "1", "2");
-            if (bChoice == "0") return ("0", "0");
-
+            IWeaponFactory? weaponFactory = GetWeaponFactory(GetValidChoice("Val (0-2): ", "0", "1", "2"));
+            if (weaponFactory is null) return (null, null);
             Console.WriteLine("\nSteg 2: Välj Flygstil");
             Console.WriteLine("1. Standard (Vanlig kastbana)");
             Console.WriteLine("2. Guidad (Tryck SPACE i luften för att störtdyka)");
-            
-            string fChoice = GetValidChoice("Val (1-2): ", "1", "2", "1"); // Tillåter inte 0 här
-            return (bChoice, fChoice);
+            IAirBehavior behavior = GetAirBehavior(GetValidChoice("Val (1-2): ", "1", "2"));
+            return (weaponFactory, behavior);
         }
 
-        // Hjälpmetod för att tvinga fram rätt svar (uppfyller "inga privata metoder")
-        protected string GetValidChoice(string prompt, string opt1, string opt2, string opt3)
+        protected IWeaponFactory? GetWeaponFactory(string choice)
+        {
+            return choice switch
+            {
+                "1" => new NormalWeaponFactory(),
+                "2" => new ExplosiveWeaponFactory(),
+                _ => null
+            };
+        }
+
+        protected IAirBehavior GetAirBehavior(string choice)
+        {
+            return choice switch
+            {
+                "1" => new GravityBehavior(),
+                "2" => new DropBehavior(),
+                _ => throw new InvalidOperationException("Ogiltigt val av flygbeteende.")
+            };
+        }
+
+        // Skyddar menyflödet från okända val och låter loopen fråga igen.
+        protected string GetValidChoice(string prompt, params string[] options)
         {
             while (true)
             {
                 Console.Write(prompt);
-                string input = Console.ReadLine()?.Trim();
-                
-                if (input == opt1 || input == opt2 || input == opt3)
-                {
-                    return input;
-                }
-                
+                string? input = Console.ReadLine()?.Trim();
+                if (input is not null && Array.Exists(options, option => option == input)) return input;
                 Console.WriteLine("Ogiltigt val! Försök igen.");
             }
         }

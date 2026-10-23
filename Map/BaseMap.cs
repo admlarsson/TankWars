@@ -24,6 +24,7 @@ namespace TankWars.Map
         {
             DrawFrame();
             DrawDecorations();
+            DrawPowerUps();
             DrawTanks();
             Console.ResetColor();
         }
@@ -33,8 +34,6 @@ namespace TankWars.Map
             int x,
             int y,
             int groundHeight);
-
-
 
 
         protected void DrawFrame()
@@ -81,6 +80,32 @@ namespace TankWars.Map
             {
                 tank.Draw();
             }
+        }
+
+        protected void DrawPowerUps()
+        {
+            foreach (IPowerUp powerUp in PowerUps.All)
+            {
+                powerUp.Draw();
+            }
+        }
+
+        public void CheckPowerUpPickup(ITank tank)
+        {
+            IPowerUp? collected = null;
+
+            foreach(IPowerUp powerUp in PowerUps.All)
+            {
+                if(powerUp.X == tank.X && powerUp.Y == tank.Y)
+                {
+                    collected = powerUp;
+                    break;
+                }
+            }
+
+            if(collected is null) return;
+            collected.ApplyEffect(tank);
+            PowerUps.Remove(collected);
         }
     }
 }
