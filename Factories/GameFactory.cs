@@ -5,18 +5,19 @@ using TankWars.Tanks;
 
 namespace TankWars.Factories
 {
+    // FALL #3:
+    // VAD: Factory Method Pattern med Beroendeinjektion
+    // HUR: Vi har en hierarki av fabriker (IMapFactory med subtyper) och produkter (IMap med subtyper). 
+    // Abstraktionerna IMapFactory och ITankFactory injiceras i GameFactorys konstruktor.
+    // VARFÖR: GameFactory behöver inte veta *vilken* karta eller tank som skapas, bara *att* den skapas. 
+    // Subtyperna (t.ex. EarthMapFactory och MoonMapFactory) skiljer sig i beteende då de genererar 
+    // helt olika terräng och instansierar olika kart-objekt.
     public class GameFactory
     {
         protected readonly IMapFactory _mapFactory;
         protected readonly ITankFactory _leftTankFactory;
         protected readonly ITankFactory _rightTankFactory;
 
-        // FALL #3:
-        // VAD: Factory Method Pattern med Beroendeinjektion
-        // HUR: Vi har en hierarki av fabriker (IMapFactory med subtyper) och produkter (IMap med subtyper). 
-        // Abstraktionerna IMapFactory och ITankFactory injiceras i GameFactorys konstruktor.
-        // VARFÖR: GameFactory behöver inte veta *vilken* karta eller tank som skapas, bara *att* den skapas. 
-        // Subtyperna (t.ex. EarthMapFactory och MoonMapFactory) skiljer sig i beteende då de genererar helt olika terräng och instansierar olika kart-objekt.
 
         public GameFactory(
             IMapFactory mapFactory, 

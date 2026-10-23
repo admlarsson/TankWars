@@ -4,7 +4,8 @@ namespace TankWars.Core
 {
     // FALL #2:
     // VAD: Generics (Klass med Type Constraint)
-    // HUR: Vi skapade EntityManager<T> (where T : class). I BaseMap konstrueras den med olika argument: EntityManager<ITank> och EntityManager<IPowerUp>.
+    // HUR: Vi skapade EntityManager<T> (where T : class). I BaseMap konstrueras den med olika argument: 
+    // EntityManager<ITank> och EntityManager<IPowerUp>.
     // VARFÖR: Istället för att skriva separata hanterare för tanks och powerups 
     // kan vi återanvända samma logik. Typinformationen bibehålls så vi slipper casta objekt när vi plockar ut dem ur listan.
 
