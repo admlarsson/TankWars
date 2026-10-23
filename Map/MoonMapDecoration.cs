@@ -18,11 +18,11 @@ namespace TankWars.Map
             DrawFlagpole(flagX, flagY);
             
             // Ritar själva flaggan
-            DrawFlagLine(flagX + 1, flagY - 9, "* * *", "══════", ConsoleColor.Red);
-            DrawFlagLine(flagX + 1, flagY - 8, " * * ", "══════", ConsoleColor.White);
-            DrawFlagLine(flagX + 1, flagY - 7, "* * *", "══════", ConsoleColor.Red);
-            DrawFlagLine(flagX + 1, flagY - 6, "", "═══════════", ConsoleColor.White);
-            DrawFlagLine(flagX + 1, flagY - 5, "", "═══════════", ConsoleColor.Red);
+            DrawFlagLine(flagX + 1, flagY - 9, "* * *", "═════════", ConsoleColor.Red);
+            DrawFlagLine(flagX + 1, flagY - 8, " * * ", "═════════", ConsoleColor.White);
+            DrawFlagLine(flagX + 1, flagY - 7, "* * *", "═════════", ConsoleColor.Red);
+            DrawFlagLine(flagX + 1, flagY - 6, "", "══════════════", ConsoleColor.White);
+            DrawFlagLine(flagX + 1, flagY - 5, "", "══════════════", ConsoleColor.Red);
         }
 
         public void DrawFlagpole(int x, int y)
@@ -36,7 +36,7 @@ namespace TankWars.Map
             Console.ResetColor();
         }
 
-        // Ändrad från protected/private till public för att följa reglerna
+        
         public void DrawFlagLine(int x, int y, string stars, string stripes, ConsoleColor color)
         {
             Console.SetCursorPosition(x, y);
