@@ -19,6 +19,7 @@ namespace TankWars.Tanks
     public abstract class BaseBullet : IWeapon
     {
         public int Damage { get; }
+        private int _shotDamage;
         protected IAirBehavior flightBehavior;
         
         public BaseBullet(IAirBehavior behavior, int damage)
@@ -47,8 +48,9 @@ namespace TankWars.Tanks
 
 
 
-        public void Fire(int startX, int startY, double power, int angle, IMap map)
+        public void Fire(int startX, int startY, double power, int angle, IMap map, int damageBonus)
         {
+            _shotDamage = Damage + damageBonus;
             flightBehavior.Reset();
             double angleRad = angle * Math.PI / 180.0;
             double vx = power * 0.1 * Math.Cos(angleRad);
@@ -108,12 +110,17 @@ namespace TankWars.Tanks
 
         protected void DrawProjectile(int x, int y, IMap map)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
             if (y < map.Height)
             {
                 Console.SetCursorPosition(x + 1, map.Height - y);
-                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("*");
-                Console.ResetColor();
+            }
+            else
+            {
+                Console.SetCursorPosition(x + 1, 1);
+                Console.Write("^");
             }
         }
 
@@ -128,11 +135,12 @@ namespace TankWars.Tanks
 
         protected void EraseProjectile(int x, int y, IMap map)
         {
-            if (y < map.Height)
-            {
-                Console.SetCursorPosition(x + 1, map.Height - y);
-                Console.Write(" "); 
-            }
+           int consoleY = y < map.Height
+        ? map.Height - y
+        : 1;
+
+    Console.SetCursorPosition(x + 1, consoleY);
+    Console.Write(" ");
         }
 
         // Hjälpmetod för att dela ut skada till alla tanks inom en viss radie (Undviker kodduplicering)
@@ -146,12 +154,23 @@ namespace TankWars.Tanks
 
         protected void DealDamage(ITank tank, IMap map)
         {
-            tank.TakeDamage(Damage);
+            int actualDamage = tank.TakeDamage(_shotDamage);
             int textX = Math.Max(0, tank.X - 5);
             int textY = Math.Max(0, map.Height - tank.Y - 2);
             Console.SetCursorPosition(textX, textY);
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write($" -{Damage} HP! ");
+
+            if(actualDamage > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write($" -{actualDamage} HP! ");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("SKÖLDEN BLOCKERADE");
+            }
+
+            
             Console.ResetColor();
             Thread.Sleep(1500);
             Console.SetCursorPosition(textX, textY);

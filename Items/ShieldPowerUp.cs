@@ -27,8 +27,7 @@ namespace TankWars.Items
 
         public void ApplyEffect(ITank tank)
         {
-            throw new NotSupportedException(
-                "Shield effects will be implemented with the pickup mechanics.");
+            tank.ActivateShield();
         }
     }
 }

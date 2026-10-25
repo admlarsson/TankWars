@@ -1,5 +1,7 @@
 using System;
+using System.ComponentModel;
 using System.Data;
+using System.Reflection;
 using System.Reflection.PortableExecutable;
 using TankWars.Map;
 
@@ -18,6 +20,12 @@ namespace TankWars.Tanks
         private readonly int _minX;
         private readonly int _maxX;
         protected readonly int _direction;
+
+        public int MinX => _minX;
+        public int MaxX => _maxX;
+
+        private bool _boostNextShot;
+        private bool _shieldActive;
 
        
 
@@ -39,10 +47,17 @@ namespace TankWars.Tanks
             SetPosition(startX); 
         }
 
-        public void TakeDamage(int amount)
+        public int TakeDamage(int amount)
         {
-            HP -= amount;
-            if(HP < 0) HP = 0;
+            if(_shieldActive)
+            {
+                _shieldActive = false;
+                return 0;
+            }
+
+            int actualDamage = Math.Min(amount, HP);
+            HP -= actualDamage;
+            return actualDamage;
         }
 
         public bool IsHitAt(int projectileX, int projectileY)
@@ -86,7 +101,10 @@ namespace TankWars.Tanks
                 actualAngle = 180 - angle; 
             }
 
-            _weapon.Fire(X, Y, power, actualAngle, Map);
+            int damageBonus = _boostNextShot ? 10 : 0;
+            _boostNextShot = false;
+
+            _weapon.Fire(X, Y, power, actualAngle, Map, damageBonus);
         }
 
         public void Heal(int amount)
@@ -103,6 +121,15 @@ namespace TankWars.Tanks
             HP += amount;
         }
 
+        public void BoostNextShot()
+        {
+            _boostNextShot = true;
+        }
+
+        public void ActivateShield()
+        {
+            _shieldActive = true;
+        }
         // Dessa MÅSTE vara 'public abstract' och sluta med semikolon
         public abstract void Draw();
     

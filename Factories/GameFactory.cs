@@ -17,16 +17,20 @@ namespace TankWars.Factories
         protected readonly IMapFactory _mapFactory;
         protected readonly ITankFactory _leftTankFactory;
         protected readonly ITankFactory _rightTankFactory;
+        private readonly Random _random = new Random();
+        private readonly IPowerUpFactory _powerUpFactory;
 
 
         public GameFactory(
             IMapFactory mapFactory, 
             ITankFactory leftTankFactory, 
-            ITankFactory rightTankFactory)
+            ITankFactory rightTankFactory,
+            IPowerUpFactory powerUpFactory)
         {
             _mapFactory = mapFactory;
             _leftTankFactory = leftTankFactory;
             _rightTankFactory = rightTankFactory;
+            _powerUpFactory = powerUpFactory;
         }
 
         public GameSession CreateGame(GameSettings settings)
@@ -38,11 +42,8 @@ namespace TankWars.Factories
             ITank tank2 = _rightTankFactory.CreateTank(map, w2);
             map.Tanks.Add(tank1);
             map.Tanks.Add(tank2);
-            // Lägger till en synlig demo-powerup på första spelarens startplattform.
-            int powerUpX = tank1.X + 5;
-            map.PowerUps.Add(
-                new HealPowerUp(powerUpX, map.TerrainHeights[powerUpX] + 1, map.Height));
-            return new GameSession(map, tank1, tank2, settings.GameMode);
+
+            return new GameSession(map, tank1, tank2, settings.GameMode, _powerUpFactory);
         }
     }
 }

@@ -1,39 +1,23 @@
-using TankWars.Factories;
-using TankWars.Tanks;
 using TankWars.Map;
+using TankWars.Tanks;
 
-public class BotTankFactory : ITankFactory
+namespace TankWars.Factories
 {
-    private readonly int _startX;
-    private readonly int _minX;
-    private readonly int _maxX;
-    private readonly int _direction;
-    protected readonly ConsoleColor _color;
-
-    public BotTankFactory(int playerNumber)
+    public class BotTankFactory : BaseTankFactory
     {
-        if(playerNumber == 1)
-        {
-            _startX = 10;
-            _minX = 1;
-            _maxX = 21;
-            _direction = 1;
-            _color = ConsoleColor.Cyan;
-        }
-        else
-        {
-            _startX = 168;
-            _minX = 159;
-            _maxX = 178;
-            _direction = -1;
-            _color = ConsoleColor.Red;
+        public BotTankFactory(int playerNumber)
+            : base(playerNumber){ }
 
+        public override ITank CreateTank(IMap map, IWeapon weapon)
+        {
+            return new BotTank(
+                _startX,
+                _minX,
+                _maxX,
+                _direction,
+                map,
+                weapon,
+                _color);
         }
     }
-
-    public ITank CreateTank(IMap map, IWeapon weapon)
-    {
-        return new BotTank(_startX, _minX, _maxX, _direction, map, weapon, _color);
-    }
-            
 }
