@@ -1,4 +1,3 @@
-using TankWars.Factories;
 using TankWars.Items;
 
 namespace TankWars.Factories
@@ -11,9 +10,17 @@ namespace TankWars.Factories
         {
             return _random.Next(3) switch
             {
-                0 => new HealPowerUp(x, y, mapHeight),
-                1 => new ShieldPowerUp(x, y, mapHeight),
-                _ => new BoostPowerUp(x, y, mapHeight)
+                0 => new PowerUp(
+                    x, y, mapHeight,
+                    new HealEffect(), '+', ConsoleColor.Green),
+
+                1 => new PowerUp(
+                    x, y, mapHeight,
+                    new ShieldEffect(), 'S', ConsoleColor.Cyan),
+
+                _ => new PowerUp(
+                    x, y, mapHeight,
+                    new BoostEffect(), 'B', ConsoleColor.Red)
             };
         }
     }
