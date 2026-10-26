@@ -6,7 +6,6 @@ namespace TankWars.Tanks
 {
     public class PlayerTank : BaseTank
     {
-        protected readonly ConsoleColor _color;
         public PlayerTank(
             int startX, 
             int minX, 
@@ -18,12 +17,6 @@ namespace TankWars.Tanks
             : base(startX, minX, maxX, direction, map, weapon)
         {
             _color = color;
-        }
-
-        public override void Draw()
-        {
-           TankRenderer renderer = new TankRenderer();
-           renderer.Draw(X, Y, Map.Height, _direction, _color);
         }
 
         public override bool ExecuteAutomatedTurn(ITank opponent)

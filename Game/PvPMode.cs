@@ -12,8 +12,10 @@ namespace TankWars.Game
         public bool UsesBotPlayer1() => false;
         public bool UsesBotPlayer2() => false;
 
-        public ITankFactory CreatePlayer1TankFactory(GameSettings settings) => new PlayerTankFactory(1);
-        public ITankFactory CreatePlayer2TankFactory(GameSettings settings) => new PlayerTankFactory(2);
+        public ITankFactory CreatePlayer1TankFactory(GameSettings settings) => 
+            new PlayerTankFactory(1);
+        public ITankFactory CreatePlayer2TankFactory(GameSettings settings) => 
+            new PlayerTankFactory(2);
 
         public IWeapon CreatePlayer1Weapon(GameSettings settings)
         {
@@ -27,6 +29,7 @@ namespace TankWars.Game
 
         public IPowerUpFactory CreatePowerUpFactory() => new RandomPowerUpFactory();
 
-        public string GetPlayerName(bool isPlayer1) => isPlayer1 ? "Spelare 1" : "Spelare 2";
+        public string GetPlayerName(bool isPlayer1) =>
+            isPlayer1 ? "Spelare 1" : "Spelare 2";
     }
 }

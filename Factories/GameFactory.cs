@@ -25,7 +25,6 @@ namespace TankWars.Factories
         // respektive spelare beroende på om det är PvP, PvE eller EvE.
         protected readonly ITankFactory _leftTankFactory;
         protected readonly ITankFactory _rightTankFactory;
-        private readonly Random _random = new Random();
 
         public GameFactory(
             IMapFactory mapFactory, 

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
+using System.Security.AccessControl;
 using TankWars.Map;
 
 namespace TankWars.Tanks
@@ -20,6 +21,7 @@ namespace TankWars.Tanks
         private readonly int _minX;
         private readonly int _maxX;
         protected readonly int _direction;
+        protected ConsoleColor _color;
 
         public int MinX => _minX;
         public int MaxX => _maxX;
@@ -136,8 +138,13 @@ namespace TankWars.Tanks
             return false;
         }
 
-        // Dessa MÅSTE vara 'public abstract' och sluta med semikolon
-        public abstract void Draw();
+        public void Draw()
+            {
+                TankRenderer renderer = new TankRenderer();
+                renderer.Draw(X, Y, Map.Height, _direction, _color);
+            }
+
+
     
     }
 }

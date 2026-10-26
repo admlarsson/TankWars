@@ -5,7 +5,6 @@ namespace TankWars.Tanks
 {
     public class BotTank : BaseTank
     {
-        protected readonly ConsoleColor _color;
         protected readonly IBotStrategy _strategy;
 
         public BotTank(
@@ -35,7 +34,11 @@ namespace TankWars.Tanks
                 MoveAndRenderStep(moveRight, i, steps, opponent);
         }
 
-        public void MoveAndRenderStep(bool moveRight, int step, int steps, ITank opponent)
+        public void MoveAndRenderStep(
+            bool moveRight, 
+            int step, 
+            int steps, 
+            ITank opponent)
         {
             if (moveRight) MoveRight(); else MoveLeft();
             Map.CheckPowerUpPickup(this);
@@ -52,12 +55,6 @@ namespace TankWars.Tanks
             Console.WriteLine($"[ Motståndarens HP: {opponent.HP} ]");
             Console.WriteLine($"Datorn flyttar ({step + 1}/{steps})...");
             System.Threading.Thread.Sleep(150);
-        }
-
-        public override void Draw()
-        {
-           TankRenderer renderer = new TankRenderer();
-           renderer.Draw(X, Y, Map.Height, _direction, _color);
         }
 
         

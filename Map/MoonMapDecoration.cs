@@ -37,7 +37,12 @@ namespace TankWars.Map
         }
 
         
-        public void DrawFlagLine(int x, int y, string stars, string stripes, ConsoleColor color)
+        public void DrawFlagLine(
+            int x, 
+            int y, 
+            string stars, 
+            string stripes, 
+            ConsoleColor color)
         {
             Console.SetCursorPosition(x, y);
             if (stars.Length > 0)
@@ -64,9 +69,12 @@ namespace TankWars.Map
                 Console.SetCursorPosition(x, y + i);
                 foreach (char c in earth[i])
                 {
-                    if (c == 'W') { Console.ForegroundColor = ConsoleColor.Blue; Console.Write('~'); }
-                    else if (c == 'L') { Console.ForegroundColor = ConsoleColor.Green; Console.Write('@'); }
-                    else if (c == 'I') { Console.ForegroundColor = ConsoleColor.White; Console.Write('='); }
+                    if (c == 'W') 
+                        { Console.ForegroundColor = ConsoleColor.Blue; Console.Write('~'); }
+                    else if (c == 'L') 
+                        { Console.ForegroundColor = ConsoleColor.Green; Console.Write('@'); }
+                    else if (c == 'I') 
+                        { Console.ForegroundColor = ConsoleColor.White; Console.Write('='); }
                     else Console.Write(' ');
                 }
             }

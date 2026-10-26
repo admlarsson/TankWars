@@ -44,8 +44,6 @@ namespace TankWars.Tanks
 
         }
 
-
-
         public void Fire(
             int startX, 
             int startY, 
