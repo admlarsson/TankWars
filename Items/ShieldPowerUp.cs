@@ -3,7 +3,7 @@ using TankWars.Tanks;
 
 namespace TankWars.Items
 {
-    public class ShieldPowerUp : PowerUpBase, IPowerUp
+    public class ShieldPowerUp : PowerUpBase
     {
         public ShieldPowerUp(int x, int y, int mapHeight) : base(x, y, mapHeight) { }
 

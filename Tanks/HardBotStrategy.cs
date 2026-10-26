@@ -39,7 +39,14 @@ namespace TankWars.Tanks
             ref int bestAngle, ref int bestPower, ref double bestError)
         {
             for (int power = 10; power <= 100; power++)
-                EvaluateShot(bot, opponent, angle, power, ref bestAngle, ref bestPower, ref bestError);
+                EvaluateShot(
+                    bot, 
+                    opponent, 
+                    angle, 
+                    power, 
+                    ref bestAngle, 
+                    ref bestPower, 
+                    ref bestError);
         }
 
         protected void EvaluateShot(

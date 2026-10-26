@@ -12,12 +12,18 @@ namespace TankWars.Game
         public bool UsesBotPlayer1() => false;
         public bool UsesBotPlayer2() => false;
 
-        public ITankFactory CreatePlayer1TankFactory(GameSettings settings) => throw UnsupportedOperation();
-        public ITankFactory CreatePlayer2TankFactory(GameSettings settings) => throw UnsupportedOperation();
-        public IWeapon CreatePlayer1Weapon(GameSettings settings) => throw UnsupportedOperation();
-        public IWeapon CreatePlayer2Weapon(GameSettings settings) => throw UnsupportedOperation();
-        public IPowerUpFactory CreatePowerUpFactory() => throw UnsupportedOperation();
-        public string GetPlayerName(bool isPlayer1) => throw UnsupportedOperation();
+        public ITankFactory CreatePlayer1TankFactory(GameSettings settings) => 
+            throw UnsupportedOperation();
+        public ITankFactory CreatePlayer2TankFactory(GameSettings settings) => 
+            throw UnsupportedOperation();
+        public IWeapon CreatePlayer1Weapon(GameSettings settings) => 
+            throw UnsupportedOperation();
+        public IWeapon CreatePlayer2Weapon(GameSettings settings) => 
+            throw UnsupportedOperation();
+        public IPowerUpFactory CreatePowerUpFactory() => 
+            throw UnsupportedOperation();
+        public string GetPlayerName(bool isPlayer1) => 
+            throw UnsupportedOperation();
 
         protected InvalidOperationException UnsupportedOperation()
         {

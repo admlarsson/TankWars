@@ -15,7 +15,12 @@ namespace TankWars.Game
         private readonly IPowerUpFactory _powerUpFactory;
         private readonly Random _random = new Random();
 
-        public GameSession(IMap map, ITank tank1, ITank tank2, IGameModeStrategy gameMode, IPowerUpFactory powerUpFactory)
+        public GameSession(
+            IMap map, 
+            ITank tank1, 
+            ITank tank2, 
+            IGameModeStrategy gameMode, 
+            IPowerUpFactory powerUpFactory)
         {
             _map = map;
             _tank1 = tank1;
@@ -94,7 +99,11 @@ namespace TankWars.Game
                 PlayTurnFrame(tank, playerName, ref isTurnActive, ref gameRunning);
         }
 
-        protected void PlayTurnFrame(ITank tank, string playerName, ref bool isTurnActive, ref bool gameRunning)
+        protected void PlayTurnFrame(
+            ITank tank, 
+            string playerName, 
+            ref bool isTurnActive, 
+            ref bool gameRunning)
         {
             Console.Clear();
             _map.Draw();

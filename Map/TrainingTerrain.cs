@@ -6,7 +6,8 @@ namespace TankWars.Map
     {
         private readonly int groundLevel;
 
-        public TrainingTerrain(int groundLevel = 0) => this.groundLevel = groundLevel;
+        public TrainingTerrain(int groundLevel = 0) => 
+            this.groundLevel = groundLevel;
 
         
         public int[] GenerateTerrain(int width, int maxHeight)

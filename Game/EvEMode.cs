@@ -27,8 +27,10 @@ namespace TankWars.Game
             return new NormalWeaponFactory().Create(new GravityBehavior());
         }
 
-        public IPowerUpFactory CreatePowerUpFactory() => new LocationBasedPowerUpFactory();
+        public IPowerUpFactory CreatePowerUpFactory() => 
+            new LocationBasedPowerUpFactory();
 
-        public string GetPlayerName(bool isPlayer1) => isPlayer1 ? "Spelare 1" : "Datorn";
+        public string GetPlayerName(bool isPlayer1) => 
+            isPlayer1 ? "Spelare 1" : "Datorn";
     }
 }

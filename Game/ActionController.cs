@@ -6,7 +6,11 @@ namespace TankWars.Game
 {
     public class ActionController
     {
-        public void HandleInput(ITank tank, IMap map, ref bool isTurnActive, ref bool gameRunning)
+        public void HandleInput(
+            ITank tank, 
+            IMap map, 
+            ref bool isTurnActive, 
+            ref bool gameRunning)
         {
             switch (Console.ReadKey(true).Key)
             {

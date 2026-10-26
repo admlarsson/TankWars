@@ -46,7 +46,13 @@ namespace TankWars.Tanks
 
 
 
-        public void Fire(int startX, int startY, double power, int angle, IMap map, int damageBonus)
+        public void Fire(
+            int startX, 
+            int startY, 
+            double power, 
+            int angle, 
+            IMap map, 
+            int damageBonus)
         {
             _shotDamage = Damage + damageBonus;
             flightBehavior.Reset();

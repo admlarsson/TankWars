@@ -4,7 +4,12 @@ namespace TankWars.Tanks
 {
     public class TankRenderer
     {
-        public void Draw(int x, int y, int mapHeight, int direction, ConsoleColor color)
+        public void Draw(
+            int x, 
+            int y, 
+            int mapHeight, 
+            int direction, 
+            ConsoleColor color)
         {
             // Justerar X så larvfötterna hamnar centrerat runt kärnkoordinaten
             int drawX = Math.Max(0, x - 1); 
