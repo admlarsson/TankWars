@@ -5,8 +5,13 @@ namespace TankWars.Factories
 {
     public class BotTankFactory : BaseTankFactory
     {
-        public BotTankFactory(int playerNumber)
-            : base(playerNumber){ }
+        protected readonly IBotStrategy _strategy;
+
+        public BotTankFactory(int playerNumber, IBotStrategy strategy)
+            : base(playerNumber)
+        {
+            _strategy = strategy;
+        }
 
         public override ITank CreateTank(IMap map, IWeapon weapon)
         {
@@ -17,7 +22,8 @@ namespace TankWars.Factories
                 _direction,
                 map,
                 weapon,
-                _color);
+                _color,
+                _strategy);
         }
     }
 }

@@ -8,19 +8,14 @@ namespace TankWars.Factories
 
         public IPowerUp CreatePowerUp(int x, int y, int mapHeight)
         {
-            return _random.Next(3) switch
+            return _random.Next(3)
+            switch
             {
-                0 => new PowerUp(
-                    x, y, mapHeight,
-                    new HealEffect(), '+', ConsoleColor.Green),
+                0 => new HealPowerUp(x, y, mapHeight),
 
-                1 => new PowerUp(
-                    x, y, mapHeight,
-                    new ShieldEffect(), 'S', ConsoleColor.Cyan),
+                1 => new ShieldPowerUp(x, y, mapHeight),
 
-                _ => new PowerUp(
-                    x, y, mapHeight,
-                    new BoostEffect(), 'B', ConsoleColor.Red)
+                _ => new BoostPowerUp(x, y, mapHeight)
             };
         }
     }

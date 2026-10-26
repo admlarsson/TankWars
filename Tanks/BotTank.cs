@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using TankWars.Map;
 
 namespace TankWars.Tanks
@@ -7,7 +6,8 @@ namespace TankWars.Tanks
     public class BotTank : BaseTank
     {
         protected readonly ConsoleColor _color;
-        private readonly Random _random = new Random();
+        protected readonly IBotStrategy _strategy;
+
         public BotTank(
             int startX,
             int minX,
@@ -15,50 +15,43 @@ namespace TankWars.Tanks
             int direction, 
             IMap map, 
             IWeapon weapon,
-            ConsoleColor color) 
+            ConsoleColor color,
+            IBotStrategy strategy)
             : base(startX, minX, maxX, direction, map, weapon)
         {
             _color = color;
+            _strategy = strategy ?? throw new ArgumentNullException(nameof(strategy));
         }
 
-        public void TakeTurn(ITank target)
+        public override bool ExecuteAutomatedTurn(ITank opponent)
         {
-            bool canMoveLeft = X - MinX >= 2;
-            bool canMoveRight = MaxX - X >= 2;
+            _strategy.ExecuteTurn(this, opponent);
+            return true;
+        }
 
-            // Slumpa riktning, men välj bara en riktning där det finns plats att gå.
-            bool moveRight = canMoveRight &&
-                (!canMoveLeft || _random.Next(2) == 0);
-
-            int availableSteps = moveRight ? MaxX - X : X - MinX;
-            int steps = _random.Next(2, Math.Min(10, availableSteps) + 1);
-
+        public void MoveForStrategy(bool moveRight, int steps, ITank opponent)
+        {
             for (int i = 0; i < steps; i++)
-            {
-                if (moveRight)
-                    MoveRight();
-                else
-                    MoveLeft();
+                MoveAndRenderStep(moveRight, i, steps, opponent);
+        }
 
-                Map.CheckPowerUpPickup(this);
+        public void MoveAndRenderStep(bool moveRight, int step, int steps, ITank opponent)
+        {
+            if (moveRight) MoveRight(); else MoveLeft();
+            Map.CheckPowerUpPickup(this);
+            RenderMovementStatus(step, steps, opponent);
+        }
 
-                Console.Clear();
-                Map.Draw();
-                Console.SetCursorPosition(0, Map.Height + 2);
-                Console.WriteLine("*** DATORNS TUR ***");
-                Console.WriteLine($"[ Position X: {X} | Datorns HP: {HP} ]");
-                Console.WriteLine($"[ Spelarens HP: {target.HP} ]");
-                Console.WriteLine($"Datorn flyttar ({i + 1}/{steps})...");
-                System.Threading.Thread.Sleep(150);
-            }
-
-            int targetX = _random.Next(target.MinX, target.MaxX + 1);
-            int distance = Math.Abs(targetX - X);
-
-            int angle = 45;
-            double power = Math.Sqrt(distance / 0.05);
-
-            Attack(angle, power);
+        public void RenderMovementStatus(int step, int steps, ITank opponent)
+        {
+            Console.Clear();
+            Map.Draw();
+            Console.SetCursorPosition(0, Map.Height + 2);
+            Console.WriteLine("*** DATORNS TUR ***");
+            Console.WriteLine($"[ Position X: {X} | Datorns HP: {HP} ]");
+            Console.WriteLine($"[ Motståndarens HP: {opponent.HP} ]");
+            Console.WriteLine($"Datorn flyttar ({step + 1}/{steps})...");
+            System.Threading.Thread.Sleep(150);
         }
 
         public override void Draw()

@@ -14,10 +14,13 @@ namespace TankWars.Game
         bool ShouldExit { get; }
         bool Player1ChoosesWeapon { get; }
         bool Player2ChoosesWeapon { get; }
-        ITankFactory CreatePlayer1TankFactory();
-        ITankFactory CreatePlayer2TankFactory();
+        bool UsesBotPlayer1();
+        bool UsesBotPlayer2();
+        ITankFactory CreatePlayer1TankFactory(GameSettings settings);
+        ITankFactory CreatePlayer2TankFactory(GameSettings settings);
         IWeapon CreatePlayer1Weapon(GameSettings settings);
         IWeapon CreatePlayer2Weapon(GameSettings settings);
+        IPowerUpFactory CreatePowerUpFactory();
         string GetPlayerName(bool isPlayer1);
     }
 }

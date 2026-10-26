@@ -29,9 +29,8 @@ namespace TankWars.Game
             {
                 GameFactory factory = new GameFactory(
                     settings.MapFactory,
-                    settings.GameMode.CreatePlayer1TankFactory(),
-                    settings.GameMode.CreatePlayer2TankFactory(),
-                    new RandomPowerUpFactory());
+                    settings.GameMode.CreatePlayer1TankFactory(settings),
+                    settings.GameMode.CreatePlayer2TankFactory(settings));
                     
                 factory.CreateGame(settings).Start();
                 playRematch = AskForRematch();

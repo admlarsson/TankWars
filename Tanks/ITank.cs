@@ -19,6 +19,7 @@ public interface ITank
     void Heal(int amount);
     void BoostNextShot();
     void ActivateShield();
+    bool ExecuteAutomatedTurn(ITank opponent);
 
 }   
 }

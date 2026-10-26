@@ -130,6 +130,12 @@ namespace TankWars.Tanks
         {
             _shieldActive = true;
         }
+
+        public virtual bool ExecuteAutomatedTurn(ITank opponent)
+        {
+            return false;
+        }
+
         // Dessa MÅSTE vara 'public abstract' och sluta med semikolon
         public abstract void Draw();
     

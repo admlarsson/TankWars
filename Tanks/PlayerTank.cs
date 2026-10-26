@@ -26,5 +26,10 @@ namespace TankWars.Tanks
            renderer.Draw(X, Y, Map.Height, _direction, _color);
         }
 
+        public override bool ExecuteAutomatedTurn(ITank opponent)
+        {
+            return false;
+        }
+
     }
 }

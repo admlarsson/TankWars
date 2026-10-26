@@ -99,10 +99,9 @@ namespace TankWars.Game
             Console.Clear();
             _map.Draw();
 
-            if(tank is BotTank bot)
+            ITank opponent = tank == _tank1 ? _tank2 : _tank1;
+            if (tank.ExecuteAutomatedTurn(opponent))
             {
-                ITank opponent = tank == _tank1 ? _tank2 : _tank1;
-                bot.TakeTurn(opponent);
                 isTurnActive = false;
                 return;
             }

@@ -26,6 +26,7 @@ namespace TankWars.Map
             DrawDecorations();
             DrawPowerUps();
             DrawTanks();
+            DrawPowerUpLegend();
             Console.ResetColor();
         }
 
@@ -96,7 +97,7 @@ namespace TankWars.Map
 
             foreach(IPowerUp powerUp in PowerUps.All)
             {
-                if(powerUp.X == tank.X && powerUp.Y == tank.Y)
+                if(powerUp.GetX() == tank.X && powerUp.GetY() == tank.Y)
                 {
                     collected = powerUp;
                     break;
@@ -106,6 +107,21 @@ namespace TankWars.Map
             if(collected is null) return;
             collected.ApplyEffect(tank);
             PowerUps.Remove(collected);
+        }
+
+        protected void DrawPowerUpLegend()
+        {
+            Console.SetCursorPosition(2, 1); //Placerar ut text uppe till vänster
+            Console.Write("PowerUps:");
+            
+            Console.SetCursorPosition(2, 2);
+            Console.Write("[H] = Heal");
+            
+            Console.SetCursorPosition(2, 3);
+            Console.Write("[B] = Boost");
+            
+            Console.SetCursorPosition(2, 4);
+            Console.Write("[S] = Shield");
         }
     }
 }

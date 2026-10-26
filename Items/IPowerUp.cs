@@ -4,11 +4,11 @@ namespace TankWars.Items
 {
     public interface IPowerUp
     {
-        int X { get; }
-        int Y { get; }
+        int GetX();
+        int GetY();
         
         void Draw();
 
-        void ApplyEffect(Tanks.ITank tank);
+        void ApplyEffect(ITank tank);
     }
 }
