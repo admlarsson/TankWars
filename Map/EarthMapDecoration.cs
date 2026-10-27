@@ -1,5 +1,3 @@
-using System;
-
 namespace TankWars.Map
 {
     public class EarthDecoration

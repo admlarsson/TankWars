@@ -1,4 +1,3 @@
-using System;
 using TankWars.Factories;
 using TankWars.Tanks;
 

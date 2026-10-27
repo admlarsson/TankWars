@@ -3,8 +3,6 @@ using TankWars.Map;
 
 namespace TankWars.Factories
 {
-    
-
     public class PlayerTankFactory : BaseTankFactory
     {
         public PlayerTankFactory(int playerNumber)

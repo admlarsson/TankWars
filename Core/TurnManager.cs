@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TankWars.Tanks; 
 
 namespace TankWars.Core
@@ -13,7 +12,6 @@ namespace TankWars.Core
             _tanks.Add(tank);
         }
 
-        // GÖR TILL EN PROPERTY: Räknar aktivt hur många som lever JUST NU
         public int AliveCount 
         {
             get

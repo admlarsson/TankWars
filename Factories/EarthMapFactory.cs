@@ -1,4 +1,3 @@
-using System;
 using TankWars.Map;
 
 namespace TankWars.Factories
@@ -15,7 +14,6 @@ namespace TankWars.Factories
 
         public IMap CreateMap(int width, int maxHeight)
         {
-            // Använder den injicerade strategin för att generera jordens terräng.
             int[] heights = _terrainGenerator.GenerateTerrain(width, maxHeight);
             return new EarthMap(heights, maxHeight);
         }

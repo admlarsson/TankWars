@@ -1,5 +1,3 @@
-using System;
-using System.Drawing;
 using TankWars.Map;
 
 namespace TankWars.Tanks

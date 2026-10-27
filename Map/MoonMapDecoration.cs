@@ -1,23 +1,18 @@
-using System;
-
 namespace TankWars.Map
 {
     public class MoonDecoration
     {
         public void Draw(int mapHeight, int[] terrainHeights)
         {
-            // Mitten av kartan för flaggan
             int flagX = terrainHeights.Length / 2;
             int flagY = mapHeight - terrainHeights[flagX];
             
-            // Placerar jorden uppe till höger i skyn (25 steg från högerkanten)
             int earthX = terrainHeights.Length - 25; 
             int earthY = 2;
 
             DrawEarth(earthX, earthY);
             DrawFlagpole(flagX, flagY);
             
-            // Ritar själva flaggan
             DrawFlagLine(flagX + 1, flagY - 9, "* * *", "═════════", ConsoleColor.Red);
             DrawFlagLine(flagX + 1, flagY - 8, " * * ", "═════════", ConsoleColor.White);
             DrawFlagLine(flagX + 1, flagY - 7, "* * *", "═════════", ConsoleColor.Red);
@@ -35,7 +30,6 @@ namespace TankWars.Map
             }
             Console.ResetColor();
         }
-
         
         public void DrawFlagLine(
             int x, 
@@ -70,11 +64,20 @@ namespace TankWars.Map
                 foreach (char c in earth[i])
                 {
                     if (c == 'W') 
-                        { Console.ForegroundColor = ConsoleColor.Blue; Console.Write('~'); }
+                        {
+                            Console.ForegroundColor = 
+                            ConsoleColor.Blue; Console.Write('~'); 
+                        }
                     else if (c == 'L') 
-                        { Console.ForegroundColor = ConsoleColor.Green; Console.Write('@'); }
+                        { 
+                            Console.ForegroundColor = 
+                            ConsoleColor.Green; Console.Write('@'); 
+                        }
                     else if (c == 'I') 
-                        { Console.ForegroundColor = ConsoleColor.White; Console.Write('='); }
+                        { 
+                            Console.ForegroundColor 
+                            = ConsoleColor.White; Console.Write('='); 
+                        }
                     else Console.Write(' ');
                 }
             }

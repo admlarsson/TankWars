@@ -1,12 +1,8 @@
-using System;
 using TankWars.Factories;
-using TankWars.Menu;
 using TankWars.Tanks;
 
 namespace TankWars.Menu
 {
-    // Vapenmenyn väljer två samverkande objekt: en vapenfabrik och ett
-    // flygbeteende. Vapenfabriken kombinerar beteendet med rätt ammunition.
     public class WeaponMenu : IMenu<(IWeaponFactory?, IAirBehavior?)>
     {
         protected readonly string _playerName;
@@ -55,7 +51,6 @@ namespace TankWars.Menu
             };
         }
 
-        // Skyddar menyflödet från okända val och låter loopen fråga igen.
         protected string GetValidChoice(string prompt, params string[] options)
         {
             while (true)

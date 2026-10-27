@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace TankWars.Core
 {
     // FALL #1:
@@ -22,7 +20,6 @@ namespace TankWars.Core
             _entities.Remove(entity);
         }
 
-        // Returnerar alla entiteter så att Kartan kan loopa igenom och rita dem
         public IEnumerable<T> All => _entities;
     }
 }

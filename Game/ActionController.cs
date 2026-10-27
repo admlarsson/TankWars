@@ -1,4 +1,3 @@
-using System;
 using TankWars.Tanks;
 using TankWars.Map;
 
@@ -34,7 +33,7 @@ namespace TankWars.Game
             var (angle, power) = inputHandler.GetShootInput();
 
             tank.Attack(angle, power);
-            System.Threading.Thread.Sleep(1000);
+            Thread.Sleep(1000);
         }
     }
 }

@@ -1,8 +1,5 @@
-using System;
-
 namespace TankWars.Tanks
 {
-    // Vanlig gravitation för standardskott
     public class GravityBehavior : IAirBehavior
     {
         private double gravity = 0.2;
@@ -12,13 +9,9 @@ namespace TankWars.Tanks
             ref double vy, 
             ConsoleKey? input)
         {
-            // Drar bara ner skottet varje frame, precis som er gamla Cannon gjorde
             vy -= gravity; 
         }
 
-        public void Reset()
-        {
-            
-        }
+        public void Reset() { }
     }
 }

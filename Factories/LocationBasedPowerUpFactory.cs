@@ -6,9 +6,6 @@ namespace TankWars.Factories
     {
         public IPowerUp CreatePowerUp(int x, int y, int mapHeight)
         {
-            // Genom att använda modulo (%) på X-koordinaten blir resten alltid 0, 1 eller 2.
-            // Till skillnad från slumpfabriken, innebär detta att en specifik X-koordinat 
-            // ALLTID resulterar i samma typ av PowerUp (deterministiskt beteende).
             int locationValue = x % 3;
 
             if(locationValue == 0)

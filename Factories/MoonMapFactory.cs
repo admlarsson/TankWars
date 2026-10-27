@@ -15,7 +15,6 @@ namespace TankWars.Factories
 
         public IMap CreateMap(int width, int maxHeight)
         {
-            // Använder den injicerade strategin för att generera månens terräng.
             int[] heights = _terrainGenerator.GenerateTerrain(width, maxHeight);
             return new MoonMap(heights, maxHeight);
         }

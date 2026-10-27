@@ -1,5 +1,3 @@
-using System;
-
 namespace TankWars.Map
 {
     public class TrainingMap : BaseMap
@@ -20,11 +18,11 @@ namespace TankWars.Map
         {
             if (groundHeight == y)
             {
-                Console.Write("-"); // Rita mark
+                Console.Write("-"); 
             }
             else
             {
-                Console.Write(" "); // Rita tom himmel
+                Console.Write(" ");
             }
         }
     }

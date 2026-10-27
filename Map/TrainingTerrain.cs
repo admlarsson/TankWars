@@ -1,7 +1,5 @@
 namespace TankWars.Map
 {
-
-
     public class TrainingTerrain : ITerrainGenerator
     {
         private readonly int groundLevel;
@@ -9,7 +7,6 @@ namespace TankWars.Map
         public TrainingTerrain(int groundLevel = 0) => 
             this.groundLevel = groundLevel;
 
-        
         public int[] GenerateTerrain(int width, int maxHeight)
         {
             int[] heights = new int[width];
@@ -21,6 +18,5 @@ namespace TankWars.Map
             return heights;
 
         }
-
-        }
+    }
 }

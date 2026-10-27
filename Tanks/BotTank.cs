@@ -1,4 +1,3 @@
-using System;
 using TankWars.Map;
 
 namespace TankWars.Tanks
@@ -40,7 +39,8 @@ namespace TankWars.Tanks
             int steps, 
             ITank opponent)
         {
-            if (moveRight) MoveRight(); else MoveLeft();
+            if (moveRight) MoveRight(); 
+            else MoveLeft();
             Map.CheckPowerUpPickup(this);
             RenderMovementStatus(step, steps, opponent);
         }
@@ -54,7 +54,7 @@ namespace TankWars.Tanks
             Console.WriteLine($"[ Position X: {X} | Datorns HP: {HP} ]");
             Console.WriteLine($"[ Motståndarens HP: {opponent.HP} ]");
             Console.WriteLine($"Datorn flyttar ({step + 1}/{steps})...");
-            System.Threading.Thread.Sleep(150);
+            Thread.Sleep(150);
         }
 
         

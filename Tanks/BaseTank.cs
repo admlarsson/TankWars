@@ -1,16 +1,9 @@
-using System;
-using System.ComponentModel;
-using System.Data;
-using System.Reflection;
-using System.Reflection.PortableExecutable;
-using System.Security.AccessControl;
 using TankWars.Map;
 
 namespace TankWars.Tanks
 {
     public abstract class BaseTank : ITank 
     {
-
         protected const int MaxHP = 100;
         public int X { get; protected set; }
         public int Y { get; protected set; }
@@ -29,9 +22,6 @@ namespace TankWars.Tanks
         private bool _boostNextShot;
         private bool _shieldActive;
 
-       
-
-
         protected BaseTank(
             int startX, 
             int minX, 
@@ -43,7 +33,7 @@ namespace TankWars.Tanks
             HP = MaxHP;
             _minX = minX; 
             _maxX = maxX; 
-            _direction = direction; // Spara riktningen
+            _direction = direction; 
             Map = map;
             _weapon = weapon;
             SetPosition(startX); 
@@ -90,16 +80,12 @@ namespace TankWars.Tanks
                 SetPosition(X + 1);
         }
 
-        // Här är Attack-metoden MED en kropp (måsvingar) som anropar vapnet
         public void Attack(int angle, double power)
         {
             int actualAngle = angle;
 
-            //Kontroll är tank vänd åt vänster
             if (_direction == -1)
             {
-                // Spegelvänd vinkeln! (T.ex. om inmatningen är 35 grader, blir det 180 - 35 = 145 grader).
-                // Detta får skottet att flyga i en perfekt båge åt vänster istället.
                 actualAngle = 180 - angle; 
             }
 

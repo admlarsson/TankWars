@@ -1,4 +1,3 @@
-using System;
 using TankWars.Map;
 using TankWars.Tanks;
 using TankWars.Core;
@@ -121,7 +120,6 @@ namespace TankWars.Game
 
         protected void DrawTurnStatus(ITank tank, string playerName)
         {
-            // Använder properties (Height, X, Hp) istället för getters.
             Console.SetCursorPosition(0, _map.Height + 2);
             Console.WriteLine($"*** TUREN ÄR DIN, {playerName.ToUpper()}! ***");
             Console.WriteLine($"[ Position X: {tank.X} ]");

@@ -1,5 +1,3 @@
-using System;
-
 namespace TankWars.Map
 {
     public class EarthMap : BaseMap
@@ -16,26 +14,23 @@ namespace TankWars.Map
             if (groundHeight == y)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("▲"); // Gräs på ytan
+                Console.Write("▲"); 
             }
             else if (groundHeight > y)
             {
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.Write("█"); // Jord under ytan
+                Console.Write("█"); 
             }
             else
             {
-                Console.Write(" "); // Tom himmel
+                Console.Write(" "); 
             }
         }
 
-        // Delegerar arbetet till den nya klassen
         public override void DrawDecorations()
         {
             EarthDecoration decoration = new EarthDecoration();
             decoration.Draw(TerrainHeights);
         }
-
-
     }
 }

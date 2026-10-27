@@ -1,11 +1,7 @@
-using System;
-using TankWars.Core;
 using TankWars.Factories;
 
 namespace TankWars.Game
 {
-    // Samordnar menyflöde och rematcher. Kartfabriken väljs i MapMenu och
-    // spellägesstrategin skapar rätt tankfabriker innan de injiceras i GameFactory.
     public class GameManager
     {
         public void StartGame()

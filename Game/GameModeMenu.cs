@@ -1,10 +1,7 @@
 using TankWars.Game;
-using TankWars.Menu;
 
 namespace TankWars.Menu
 {
-    // Menyn returnerar en strategi direkt i stället för en int som måste tolkas
-    // av GameManager och GameFactory.
     public class GameModeMenu : IMenu<IGameModeStrategy>
     {
         public IGameModeStrategy RunMenu()

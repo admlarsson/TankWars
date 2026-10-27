@@ -1,7 +1,3 @@
-//Ersätter cannon
-
-using System;
-using System.Dynamic;
 using TankWars.Map;
 
 namespace TankWars.Tanks
@@ -12,8 +8,6 @@ namespace TankWars.Tanks
     // komponerad med en implementatör (IAirBehavior med subtyper Gravity/Drop).
     // VARFÖR: Undviker en exponentiell klass-explosion. Valfri ammunition
     // kan kombineras med valfritt flygbeteende dynamiskt vid runtime.
-
-
     public abstract class BaseBullet : IWeapon
     {
         public int Damage { get; }
@@ -28,20 +22,15 @@ namespace TankWars.Tanks
         
         protected ConsoleKey? GetInputDuringFlight()
         {
-              ConsoleKey? keyPressed = null;
+            ConsoleKey? keyPressed = null;
 
-                // MAGIN: Kollar om en knapp trycktes ner MEDAN skottet är i luften
                 if (Console.KeyAvailable)
                 {
                     keyPressed = Console.ReadKey(true).Key;
                     
-                    // Rensar bufferten ifall spelaren spammar knappen
                     while (Console.KeyAvailable) Console.ReadKey(true); 
-
-                    
                 }
             return keyPressed;
-
         }
 
         public void Fire(
@@ -63,13 +52,10 @@ namespace TankWars.Tanks
 
             while (isFlying)
             {
-                // Kollar om konapp trycks ned under färd
                 ConsoleKey? keyPressed = GetInputDuringFlight();
 
-                // 1. RÖRELSE
                 x += vx; y += vy;
 
-                // 2. STRATEGY/BRIDGE: Låt beteendet bestämma vad som händer med farten!
                 flightBehavior.UpdateVelocity(ref vx, ref vy, keyPressed);
 
                 int screenX = (int)Math.Round(x);
@@ -89,7 +75,6 @@ namespace TankWars.Tanks
         {
             if (screenX < 0 || screenX >= map.TerrainHeights.Length) return false;
 
-            // 1. Markkontroll: Träffade vi marken?
             if (screenY <= map.TerrainHeights[screenX])
             {
                 Explode(screenX, map.TerrainHeights[screenX] + 1, map, null);
@@ -132,7 +117,7 @@ namespace TankWars.Tanks
             Thread.Sleep(50);
             EraseProjectile(x, y, map);
 
-            map.DrawDecorations(); // Gör så att exmpelvis flaggan inte går sönder
+            map.DrawDecorations(); 
         }
 
         protected void EraseProjectile(int x, int y, IMap map)
@@ -145,7 +130,6 @@ namespace TankWars.Tanks
             Console.Write(" ");
         }
 
-        // Hjälpmetod för att dela ut skada till alla tanks inom en viss radie (Undviker kodduplicering)
         protected void DealAreaDamage(int hitX, IMap map, int blastRadius)
         {
             foreach (ITank tank in map.Tanks.All)
@@ -178,12 +162,6 @@ namespace TankWars.Tanks
             Console.SetCursorPosition(textX, textY);
             Console.Write("           ");
         }
-
-
-
-
-        // Ersätter DrawExplosion. Tvingar subklasserna att bestämma både utseende OCH skaderadie.
         protected abstract void Explode(int x, int y, IMap map, ITank? hitTank);
-
     }
 }

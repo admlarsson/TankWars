@@ -54,13 +54,16 @@ namespace TankWars.Factories
         public GameSession CreateGame()
         {
             IMap map = _mapFactory.CreateMap(180, 40);
-            IWeapon w1 = _gameMode.CreatePlayer1Weapon(_player1WeaponFactory, _player1AirBehavior);
-            IWeapon w2 = _gameMode.CreatePlayer2Weapon(_player2WeaponFactory, _player2AirBehavior);
+            IWeapon w1 = _gameMode.CreatePlayer1Weapon(
+                    _player1WeaponFactory, _player1AirBehavior);
+            IWeapon w2 = _gameMode.CreatePlayer2Weapon(
+                    _player2WeaponFactory, _player2AirBehavior);
             ITank tank1 = _leftTankFactory.CreateTank(map, w1);
             ITank tank2 = _rightTankFactory.CreateTank(map, w2);
             map.Tanks.Add(tank1);
             map.Tanks.Add(tank2);
-            return new GameSession(map, tank1, tank2, _gameMode, _gameMode.CreatePowerUpFactory());
+            return new GameSession(map, tank1, tank2, _gameMode, 
+                _gameMode.CreatePowerUpFactory());
         }
     }
 }

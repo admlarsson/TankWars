@@ -1,10 +1,7 @@
-using System;
-
 namespace TankWars.Map
 {
     public class MoonMap : BaseMap
     {
-        // Skickar vidare datan till basklassen via : base()
         public MoonMap(int[] heights, int height) : base(heights, height) { }
 
         protected override void SetFrameColor()
@@ -14,7 +11,6 @@ namespace TankWars.Map
 
         protected override void DrawCoordinate(int x, int y, int groundHeight)
         {
-            // Månen är solid sten ända ner i botten
             if (groundHeight >= y)
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray; 
@@ -22,11 +18,10 @@ namespace TankWars.Map
             }
             else
             {
-                Console.Write(" "); // Tom rymd
+                Console.Write(" "); 
             }
         }
 
-        // Delegerar arbetet till den nya klassen
         public override void DrawDecorations()
         {
             MoonDecoration decoration = new MoonDecoration();

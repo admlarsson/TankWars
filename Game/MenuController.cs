@@ -1,14 +1,11 @@
 using TankWars.Factories;
 using TankWars.Menu;
-using TankWars.Map;
 using TankWars.Tanks;
 
 namespace TankWars.Game
 {
     public class MenuController
     {
-        // This is the single approved exception to the 20-line method limit:
-        // keeping the entire procedural menu flow together is intentional.
         public GameFactory? CreateGameFactory()
         {
             IGameModeStrategy? gameMode = null;

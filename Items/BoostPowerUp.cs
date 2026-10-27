@@ -1,4 +1,3 @@
-using System;
 using TankWars.Tanks;
 
 namespace TankWars.Items

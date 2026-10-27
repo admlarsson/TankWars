@@ -6,7 +6,6 @@ namespace TankWars.Map
 {
     public interface IMap
     {
-        // Lägg till Height här så att alla vet att en IMap alltid har en höjd!
         int Height { get; }
         
         int[] TerrainHeights { get; }

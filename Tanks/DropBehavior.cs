@@ -1,8 +1,5 @@
-using System;
-
 namespace TankWars.Tanks
 {
-    // Det guidade skottet som kan droppas med SPACE
     public class DropBehavior : IAirBehavior
     {
         private double gravity = 0.2;
@@ -15,21 +12,20 @@ namespace TankWars.Tanks
         {
             if (!hasDropped)
             {
-                vy -= gravity; // Vanlig gravitation om vi inte har droppat än
+                vy -= gravity; 
             }
 
-            // Lyssnar: Tryckte spelaren precis på SPACE?
             if (input == ConsoleKey.Spacebar && !hasDropped)
             {
-                vx = 0;      // Stanna helt i sidled
-                vy = -2.0;   // Dyk rakt ner snabbt!
-                hasDropped = true; // Förhindra att man trycker igen
+                vx = 0;      
+                vy = -2.0;   
+                hasDropped = true; 
             }
         }
 
         public void Reset()
         {
-            hasDropped = false; // Nu kan vi droppa nästa skott
+            hasDropped = false; 
         }
     }
 }

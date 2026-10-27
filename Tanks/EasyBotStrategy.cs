@@ -1,5 +1,3 @@
-using System;
-
 namespace TankWars.Tanks
 {
     public class EasyBotStrategy : IBotStrategy

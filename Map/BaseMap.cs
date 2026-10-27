@@ -1,4 +1,3 @@
-using System;
 using TankWars.Core;
 using TankWars.Items;
 using TankWars.Tanks;
@@ -7,7 +6,6 @@ namespace TankWars.Map
 {
     public abstract class BaseMap : IMap
     {
-        // Gemensam data för alla kartor
         public EntityManager<ITank> Tanks { get; } =
         new EntityManager<ITank>();
         public EntityManager<IPowerUp> PowerUps { get; } =
@@ -51,10 +49,8 @@ namespace TankWars.Map
         }
 
     
-        public virtual void DrawDecorations() 
-        { 
-            // Standard är att inte rita något extra
-        }
+        public virtual void DrawDecorations(){ }
+
         protected void DrawBorder(char left, char fill, char right, int width)
         {
             SetFrameColor();
@@ -111,7 +107,7 @@ namespace TankWars.Map
 
         protected void DrawPowerUpLegend()
         {
-            Console.SetCursorPosition(2, 1); //Placerar ut text uppe till vänster
+            Console.SetCursorPosition(2, 1);
             Console.Write("PowerUps:");
             
             Console.SetCursorPosition(2, 2);

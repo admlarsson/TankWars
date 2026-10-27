@@ -1,11 +1,8 @@
 using TankWars.Factories;
 using TankWars.Map;
-using TankWars.Menu;
 
 namespace TankWars.Menu
 {
-    // Varje giltigt kartval skapar kartans fabrik direkt. Null betyder att
-    // användaren vill gå tillbaka till huvudmenyn.
     public class MapMenu : IMenu<IMapFactory?>
     {
         public IMapFactory? RunMenu()
@@ -44,11 +41,8 @@ namespace TankWars.Menu
             return input switch
             {
                 "0" => null,
-                // Injicerar träningsbanans terrängstrategi i kartfabriken.
                 "1" => new TrainingMapFactory(new TrainingTerrain(groundLevel: 0)),
-                // Injicerar jordens terrängstrategi med dess befintliga marknivå.
                 "2" => new EarthMapFactory(new EarthTerrain(groundLevel: 7)),
-                // Injicerar månens terrängstrategi i kartfabriken.
                 "3" => new MoonMapFactory(new MoonTerrain()),
                 _ => null
             };
