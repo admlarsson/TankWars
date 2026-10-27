@@ -12,19 +12,19 @@ namespace TankWars.Game
         public bool UsesBotPlayer1() => false;
         public bool UsesBotPlayer2() => false;
 
-        public ITankFactory CreatePlayer1TankFactory(GameSettings settings) => 
+        public ITankFactory CreatePlayer1TankFactory(IBotStrategy botStrategy) =>
             new PlayerTankFactory(1);
-        public ITankFactory CreatePlayer2TankFactory(GameSettings settings) => 
+        public ITankFactory CreatePlayer2TankFactory(IBotStrategy botStrategy) =>
             new PlayerTankFactory(2);
 
-        public IWeapon CreatePlayer1Weapon(GameSettings settings)
+        public IWeapon CreatePlayer1Weapon(IWeaponFactory factory, IAirBehavior behavior)
         {
-            return settings.Player1WeaponFactory.Create(settings.Player1AirBehavior);
+            return factory.Create(behavior);
         }
 
-        public IWeapon CreatePlayer2Weapon(GameSettings settings)
+        public IWeapon CreatePlayer2Weapon(IWeaponFactory factory, IAirBehavior behavior)
         {
-            return settings.Player2WeaponFactory.Create(settings.Player2AirBehavior);
+            return factory.Create(behavior);
         }
 
         public IPowerUpFactory CreatePowerUpFactory() => new RandomPowerUpFactory();

@@ -1,3 +1,4 @@
+using System;
 using TankWars.Factories;
 using TankWars.Tanks;
 
@@ -5,6 +6,8 @@ namespace TankWars.Game
 {
     public class PvEMode : IGameModeStrategy
     {
+        private readonly Random _random = new Random();
+
         public bool ShouldExit => false;
         public bool Player1ChoosesWeapon => true;
         public bool Player2ChoosesWeapon => false;
@@ -12,19 +15,25 @@ namespace TankWars.Game
         public bool UsesBotPlayer1() => false;
         public bool UsesBotPlayer2() => true;
 
-        public ITankFactory CreatePlayer1TankFactory(GameSettings settings) => 
+        public ITankFactory CreatePlayer1TankFactory(IBotStrategy botStrategy) =>
             new PlayerTankFactory(1);
-        public ITankFactory CreatePlayer2TankFactory(GameSettings settings) =>
-            new BotTankFactory(2, settings.GetPlayer2BotStrategy());
+        public ITankFactory CreatePlayer2TankFactory(IBotStrategy botStrategy) =>
+            new BotTankFactory(2, botStrategy);
 
-        public IWeapon CreatePlayer1Weapon(GameSettings settings)
+        public IWeapon CreatePlayer1Weapon(IWeaponFactory factory, IAirBehavior behavior)
         {
-            return settings.Player1WeaponFactory.Create(settings.Player1AirBehavior);
+            return factory.Create(behavior);
         }
 
-        public IWeapon CreatePlayer2Weapon(GameSettings settings)
+        public IWeapon CreatePlayer2Weapon(IWeaponFactory factory, IAirBehavior behavior)
         {
-            return new NormalWeaponFactory().Create(new GravityBehavior());
+            IWeaponFactory randomFactory = _random.Next(2) == 0
+                ? new NormalWeaponFactory()
+                : new ExplosiveWeaponFactory();
+            IAirBehavior randomBehavior = _random.Next(2) == 0
+                ? new GravityBehavior()
+                : new DropBehavior();
+            return randomFactory.Create(randomBehavior);
         }
 
         public IPowerUpFactory CreatePowerUpFactory() => 

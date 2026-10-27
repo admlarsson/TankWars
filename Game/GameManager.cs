@@ -16,23 +16,18 @@ namespace TankWars.Game
 
         protected bool RunGameCycle()
         {
-            GameSettings settings = new MenuController().CreateSettings();
-            if (settings.GameMode.ShouldExit) return false;
-            PlayRematches(settings);
+            GameFactory? factory = new MenuController().CreateGameFactory();
+            if (factory is null) return false;
+            PlayRematches(factory);
             return true;
         }
 
-        protected void PlayRematches(GameSettings settings)
+        protected void PlayRematches(GameFactory factory)
         {
             bool playRematch = true;
             while (playRematch)
             {
-                GameFactory factory = new GameFactory(
-                    settings.MapFactory,
-                    settings.GameMode.CreatePlayer1TankFactory(settings),
-                    settings.GameMode.CreatePlayer2TankFactory(settings));
-                    
-                factory.CreateGame(settings).Start();
+                factory.CreateGame().Start();
                 playRematch = AskForRematch();
             }
         }
