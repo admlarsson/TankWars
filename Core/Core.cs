@@ -1,11 +1,16 @@
 namespace TankWars.Core
 {
-    // FALL #1:
-    // VAD: Generics
-    // HUR: EntityManager<T> används som EntityManager<ITank> och
-    // EntityManager<IPowerUp>. Add, Remove och All arbetar med T direkt.
-    // VARFÖR: Samma typsäkra hanteringslogik fungerar för olika entitetstyper
-    // utan separata manager-klasser eller casting när entiteter hämtas.
+    // FALL #1: 
+    // Vad: Generics
+    //
+    // HUR: I BaseMap använder vi EntityManager<ITank> för att hantera
+    // tankarna och EntityManager<IPowerUp> för att hantera power-ups.
+    // Båda använder samma metoder för att lägga till, ta bort och hämta objekt.
+    //
+    // VARFÖR: Vi slipper skriva separata klasser för tankar och power-ups.
+    // Koden blir enklare att återanvända och vi säkerställer att rätt
+    // typ av objekt hanteras.
+
     public class EntityManager<T>
     {
         private readonly List<T> _entities = new List<T>();

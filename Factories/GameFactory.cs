@@ -10,19 +10,30 @@ namespace TankWars.Factories
     {
 
         // FALL #7:
-        // VAD: Factory Method Pattern (Kartor)
-        // HUR: En instans av IMapFactory (t.ex. EarthMapFactory) injiceras
-        // för att skapa en specifik kartprodukt.
-        // VARFÖR: GameFactory bygger upp spelvärlden utan att veta vilken
-        // specifik karta som används, skapandet delegeras helt till subtypen.
+        // Vad: Factory Method Pattern (Kartor)
+        //
+        // HUR: I MapMenu väljer spelaren vilken karta som ska användas.
+        // Den valda kartfabriken, exempelvis EarthMapFactory eller MoonMapFactory,
+        // skickas till GameFactory. Där anropas CreateMap() för att skapa
+        // kartan. Varje fabrik ansvarar för att skapa sin egen karttyp.
+        //
+        // VARFÖR: GameFactory behöver inte veta vilken konkret karta som skapas.
+        // Vi kan använda samma metod för olika karttyper och enkelt
+        // lägga till nya kartor utan att ändra GameFactory.
         protected readonly IMapFactory _mapFactory;
 
         // FALL #8:
-        // VAD: Factory Method Pattern (Tanks)
-        // HUR: Två ITankFactory-instanser injiceras för att bygga PlayerTank
-        // eller BotTank.
-        // VARFÖR: Spelet kan dynamiskt montera ihop rätt stridsvagnstyper för
-        // respektive spelare beroende på om det är PvP, PvE eller EvE.
+        // Vad: Factory Method Pattern (Tankar)
+        //
+        // HUR: Det valda spelläget bestämmer vilka tankfabriker som ska
+        // användas, exempelvis PlayerTankFactory eller BotTankFactory.
+        // Dessa skickas till GameFactory, som anropar CreateTank()
+        // för att skapa tankarna med den valda kartan och vapnen.
+        //
+        // VARFÖR: Vi kan skapa både spelarstyrda och datorstyrda tankar
+        // genom samma metod. GameFactory behöver inte veta vilken
+        // konkret tanktyp som skapas, vilket gör det enklare att
+        // hantera olika spellägen och lägga till nya tanktyper.
         protected readonly ITankFactory _leftTankFactory;
         protected readonly ITankFactory _rightTankFactory;
         protected readonly IWeaponFactory _player1WeaponFactory;

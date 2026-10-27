@@ -3,11 +3,16 @@ using TankWars.Map;
 namespace TankWars.Tanks
 {
     // FALL #6:
-    // VAD: Bridge Pattern
-    // HUR: Abstraktionen (BaseBullet med subtyper Normal/Explosive) är
-    // komponerad med en implementatör (IAirBehavior med subtyper Gravity/Drop).
-    // VARFÖR: Undviker en exponentiell klass-explosion. Valfri ammunition
-    // kan kombineras med valfritt flygbeteende dynamiskt vid runtime.
+    // Vad: Bridge Pattern
+    //
+    // HUR: Vi använder BaseBullet som en gemensam basklass för NormalBullet
+    // och ExplosiveBullet. BaseBullet får ett IAirBehavior genom konstruktorn,
+    // vilket gör att båda projektiltyperna kan använda GravityBehavior eller
+    // DropBehavior. Flygbeteendet styr hur projektilen rör sig under skottet.
+    //
+    // VARFÖR: Vi kan kombinera olika projektiler med olika flygbeteenden
+    // utan att behöva skapa en separat klass för varje kombination.
+    // Det blir enklare att lägga till nya projektiler och flygbeteenden.
     public abstract class BaseBullet : IWeapon
     {
         public int Damage { get; }
