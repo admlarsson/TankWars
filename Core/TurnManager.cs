@@ -29,19 +29,11 @@ namespace TankWars.Core
 
         public ITank GetNextTank()
         {
-            if (AliveCount <= 1) return null;
+            if (AliveCount <= 1) throw new InvalidOperationException("Minst 1 tank borta!");
 
-            while (true)
-            {
-                _currentIndex++;
-                if (_currentIndex >= _tanks.Count) _currentIndex = 0;
-                
-                // Om tanken lever, returnera den
-                if (_tanks[_currentIndex].HP > 0)
-                {
-                    return _tanks[_currentIndex];
-                }
-            }
+            _currentIndex = (_currentIndex + 1) % _tanks.Count;
+
+            return _tanks[_currentIndex];
         }
     }
 }

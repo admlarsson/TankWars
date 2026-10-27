@@ -10,7 +10,7 @@ namespace TankWars.Items
             int y, 
             int mapHeight) : base(x, y, mapHeight) { }
 
-        public override void Draw() => DrawAt('S', ConsoleColor.Cyan);
+        public override void Draw() => DrawAt('⛨', ConsoleColor.Cyan);
         public override void ApplyEffect(ITank tank) => tank.ActivateShield();
     }
 }

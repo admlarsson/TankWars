@@ -115,13 +115,13 @@ namespace TankWars.Map
             Console.Write("PowerUps:");
             
             Console.SetCursorPosition(2, 2);
-            Console.Write("[H] = Heal");
+            Console.Write("[♥] = Heal");
             
             Console.SetCursorPosition(2, 3);
-            Console.Write("[B] = Boost");
+            Console.Write("[⚡] = Boost");
             
             Console.SetCursorPosition(2, 4);
-            Console.Write("[S] = Shield");
+            Console.Write("[⛨] = Shield");
         }
     }
 }

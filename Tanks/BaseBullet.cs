@@ -137,12 +137,12 @@ namespace TankWars.Tanks
 
         protected void EraseProjectile(int x, int y, IMap map)
         {
-           int consoleY = y < map.Height
-        ? map.Height - y
-        : 1;
+            int consoleY = y < map.Height
+            ? map.Height - y
+            : 1;
 
-    Console.SetCursorPosition(x + 1, consoleY);
-    Console.Write(" ");
+            Console.SetCursorPosition(x + 1, consoleY);
+            Console.Write(" ");
         }
 
         // Hjälpmetod för att dela ut skada till alla tanks inom en viss radie (Undviker kodduplicering)

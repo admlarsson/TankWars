@@ -10,7 +10,7 @@ namespace TankWars.Items
             int y, 
             int mapHeight) : base(x, y, mapHeight) { }
 
-        public override void Draw() => DrawAt('+', ConsoleColor.Green);
+        public override void Draw() => DrawAt('♥', ConsoleColor.Green);
         public override void ApplyEffect(ITank tank) => tank.Heal(25);
     }
 }

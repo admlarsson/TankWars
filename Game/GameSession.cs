@@ -36,10 +36,10 @@ namespace TankWars.Game
 
         protected TurnManager CreateTurnManager()
         {
-            TurnManager manager = new TurnManager();
-            manager.AddTank(_tank1);
-            manager.AddTank(_tank2);
-            return manager;
+            TurnManager turnManager = new TurnManager();
+            turnManager.AddTank(_tank1);
+            turnManager.AddTank(_tank2);
+            return turnManager;
         }
 
         protected void RunTurns(TurnManager turnManager)
@@ -50,15 +50,10 @@ namespace TankWars.Game
             {
                 PlayNextTurn(turnManager, ref gameRunning);
 
-                if(!gameRunning)
-                    break;
-
                 turnsThisRound ++;
 
-                if(turnsThisRound == 2)
+                if(turnsThisRound % 2 == 0)
                 {
-                    turnsThisRound = 0;
-
                     bool powerUpsAreOnMap = _map.PowerUps.All.Any();
 
                     if(!powerUpsAreOnMap && _random.Next(100) < 70)
